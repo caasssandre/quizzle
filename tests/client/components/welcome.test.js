@@ -6,6 +6,8 @@ import Create from '../../../client/components/Create'
 import React from 'react'
 import { shallow } from 'enzyme'
 
+jest.mock('../../../client/api/socket', () => ({}))
+
 const setUp = (props = {}) => {
     const component = shallow(<Welcome {...props} window={false} />)
     return component

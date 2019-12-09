@@ -5,7 +5,7 @@ import {savePlayerDetails, saveTeamName, incrementPage} from '../actions'
 import { addPlayerToTeam, getTeams } from '../api/users'
 import socket from '../api/socket'
 
-class Create extends React.Component {
+export class Create extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -76,31 +76,31 @@ class Create extends React.Component {
         <section className='setup'>
           <h1 className='setup-gameTitle'>Quizzical</h1>
           {/* <h2 className='setup-create'>Game Created</h2> */}
-          <h1 className='setup-welcomeCaptain'>Welcome Captain!</h1>
+          <h1 className='setup-welcomeCaptain' id="welcome">Welcome Captain!</h1>
           {/* <h1>{this.state.team}</h1> */}
         </section>
 
         <section className='setup'>
           <p className='setup-form'>Enter your name below:</p>
-          <input className='setup-user__fields' name="captainName" onChange={this.handleChange} value={this.state.captainName} />
+          <input className='setup-user__fields' id="capNameInput" name="captainName" onChange={this.handleChange} value={this.state.captainName} />
 
           <form>
             {/* <div className='setup-btns'> */}
               <section>
-                <div className='setup-btns__btn' onClick={this.createTeam}>
+                <div className='setup-btns__btn' id="createBtn" onClick={this.createTeam}>
                   Create Team
                 </div>
               </section>
             {/* </div> */}
             <section className='setup-join'>
               <p>Not quite what you want?</p>
-              <div className='setup-btns__btn' onClick={(e) => this.props.changePage(e, 'join')}>
+              <div className='setup-btns__btn' id="joinBtn" onClick={(e) => this.props.changePage(e, 'join')}>
                 Join Team
                 </div>
-                <div className='setup-btns__btn' onClick={(e) => this.props.changePage(e, 'instructions')}>
+                <div className='setup-btns__btn' id="rulesBtn" onClick={(e) => this.props.changePage(e, 'instructions')}>
                 Rules
                 </div>
-                <div className='home-btns__btn' onClick={(e)=>this.props.changePage(e, 'main')}>
+                <div className='home-btns__btn' id="mmBtn" onClick={(e)=>this.props.changePage(e, 'main')}>
                   Main menu
                 </div>
             </section>

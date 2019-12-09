@@ -2,6 +2,8 @@ import { Instructions } from '../../../client/components/Instructions'
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 
+jest.mock('../../../client/api/socket', () => ({}))
+
 
 describe('Inscructions Component', () => {
 

@@ -11,7 +11,7 @@
     "watch:client": "webpack --watch",
     "watch:server": "nodemon --watch server",
     "start": "node server",
-    "test": "jest --noStackTrace --watchAll",
+    "test": "jest --watchAll",
     "postinstall": "webpack",
     "h:deploy": "git push heroku heroku:master",
     "h:migrate": "heroku run npx knex migrate:latest",
