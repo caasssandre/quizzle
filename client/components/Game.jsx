@@ -88,12 +88,12 @@ class Game extends React.Component {
     let q = this.props.questions
     return (
       !q.trivias ? < QuestionSplash /> :
-        this.props.clock > this.props.players.length * 30 ? <QuestionSplash /> :
+        this.props.clock > this.props.players.length * 20 ? <QuestionSplash /> :
           <div className='questions'>
             <h1 className="questions-gameTitle">Quizzical</h1>
             {/* <p className='questions-clock'>{this.props.clock}</p> */}
             <div className="progress-bar">
-              <div style={{ width: `${this.props.clock * 100 / (this.props.players.length * 30)}%` }} className="filler"></div>
+              <div style={{ width: `${this.props.clock * 100 / (this.props.players.length * 20)}%` }} className="filler"></div>
             </div>
             {q.trivias && <h2 className='questions-title'>{q.trivias[this.props.player.index].question}</h2>}
             {!this.state.submittedAnswer && q.jumbledTrivias && (

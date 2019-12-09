@@ -1,4 +1,4 @@
-const timePerPlayer = 30
+const timePerPlayer = 20
 
 const reducer = (state = timePerPlayer, action) => {
   switch (action.type){

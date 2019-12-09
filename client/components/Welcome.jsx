@@ -10,7 +10,7 @@ export class Welcome extends React.Component {
     this.state = {
       display: "main",
       history: ["main"],
-      historyIndex: 0
+      historyIndex: 0,
     }
   }
 

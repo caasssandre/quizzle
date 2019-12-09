@@ -8,6 +8,7 @@ class Results extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      buttonClicked:false
     }
   }
 
@@ -31,16 +32,22 @@ class Results extends React.Component {
     }, 2000)
   }
 
-  nextQuestion = (event) => {
-    event.preventDefault()
+  nextQuestion = () => {
     socket.emit('new question', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
     socket.emit('check for strike', this.props.teamName)
   }
 
-  endGame = (event) => {
-    event.preventDefault()
-    socket.emit('check for strike', this.props.teamName)
-    socket.emit('increment pages', this.props.teamName)
+  endGame = () => {
+    if(this.state.buttonClicked == true){
+      // do nothing
+    }
+    else{
+      socket.emit('check for strike', this.props.teamName)
+      socket.emit('increment pages', this.props.teamName)
+      this.setState({
+        buttonClicked:true
+      })
+    }
   }
 
   render() {

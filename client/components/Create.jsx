@@ -9,7 +9,8 @@ export class Create extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      captainName:''
+      captainName:'',
+      buttonClicked: false
     }
   }
   
@@ -46,13 +47,21 @@ export class Create extends React.Component {
   }
 
   createTeam = () => {
-    if(this.state.captainName == ''){
-      this.setState({
-        message:'Please enter a username'
-      })
+    if(this.state.buttonClicked == true){
+      // do nothing
     }
     else{
-      this.addPlayerToTeam(true)
+      this.setState({
+        buttonClicked: true
+      })
+      if(this.state.captainName == ''){
+        this.setState({
+          message:'Please enter a username'
+        })
+      }
+      else{
+        this.addPlayerToTeam(true)
+      }
     }
   }
 

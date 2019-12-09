@@ -25,13 +25,10 @@ class Leaderboard extends React.Component {
         socket.on('receive leaderboard', leaders=>{
             let highScore = 0
             leaders.map(leader => {
-                console.log(leader.teamScore)
-                console.log('kjghj')
                 if (leader.teamScore > highScore) {
                     highScore = leader.teamScore
                 }
             })
-            console.log(highScore)
             this.setState({
                 maxScore: highScore
             })

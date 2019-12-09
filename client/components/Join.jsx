@@ -10,7 +10,8 @@ import socket from '../api/socket'
     super(props)
     this.state = {
       player:'',
-      team:''
+      team:'',
+      buttonClicked:false
     }
     this.joinTeam = this.joinTeam.bind(this)
   }
@@ -27,47 +28,55 @@ import socket from '../api/socket'
   }
 
 
-  joinTeam () {
-    getTeams().then(res => {
-      
+  joinTeam = () => {
+    if(this.state.buttonClicked == true){
+      // do nothing
+    }
+    else{
       this.setState({
-        message: ''
+        buttonClicked: true
       })
-      if(this.state.team == ''){
+      getTeams().then(res => {
+        
         this.setState({
-          message:'Please enter a valid team code'
+          message: ''
         })
-      }
-      else if(this.state.player == ''){
-        this.setState({
-          message:'Please enter a username'
-        })
-      }
-      else if (!res.text.includes(this.state.team)) {
-        this.setState({
-          message: 'This team does not exist, maybe you would like to create one?'
-        })
-      }
-      else {
-        getPlayersByTeam(this.state.team).then(res => {
-          if(JSON.parse(res.text)[0].game_started){
-            this.setState({
-              message: 'This team has started playing without you!'
-            })
-          }
-          else if (!JSON.parse(res.text).find(player => {
-            return player.name == this.state.player
-          })) {
-            this.addPlayerToTeam(false)
-          }
-          else {
-            this.setState({
-              message: 'This username is taken - please pick a new one.'
-            })
-          }
-        })
-      }
-    })
+        if(this.state.team == ''){
+          this.setState({
+            message:'Please enter a valid team code'
+          })
+        }
+        else if(this.state.player == ''){
+          this.setState({
+            message:'Please enter a username'
+          })
+        }
+        else if (!res.text.includes(this.state.team)) {
+          this.setState({
+            message: 'This team does not exist, maybe you would like to create one?'
+          })
+        }
+        else {
+          getPlayersByTeam(this.state.team).then(res => {
+            if(JSON.parse(res.text)[0].game_started){
+              this.setState({
+                message: 'This team has started playing without you!'
+              })
+            }
+            else if (!JSON.parse(res.text).find(player => {
+              return player.name == this.state.player
+            })) {
+              this.addPlayerToTeam(false)
+            }
+            else {
+              this.setState({
+                message: 'This username is taken - please pick a new one.'
+              })
+            }
+          })
+        }
+      })
+    }
   }
 
   addPlayerToTeam = (captain) => {

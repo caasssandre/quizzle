@@ -6,10 +6,11 @@ import socket from '../api/socket'
 class GameEnd extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      buttonClicked : false
+    }
   }
 
-  componentDidMount() {
-  }
 
   playAgain = () => {
     socket.emit('reset game', this.props.teamName)
@@ -22,7 +23,15 @@ class GameEnd extends React.Component {
   }
 
   leaderboard = () => {
-    socket.emit('increment pages', this.props.teamName)
+    if(this.state.buttonClicked == true){
+      // do nothing
+    }
+    else{
+      socket.emit('increment pages', this.props.teamName)
+      this.setState({
+        buttonClicked:true
+      })
+    }
   }
 
   render() {

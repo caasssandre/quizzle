@@ -11,7 +11,7 @@ h1, h2 {
 
 .home {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -73,8 +73,8 @@ h1, h2 {
   height: 100%;
   padding-top: 3vh;
   padding-bottom: 1vh;
-  padding-left: 10vh;
-  padding-right: 10vh;
+  padding-left: 5vh;
+  padding-right: 5vh;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -167,7 +167,7 @@ h1, h2 {
 
 .lobby {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -225,7 +225,7 @@ h1, h2 {
 
 .loading {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -251,7 +251,7 @@ h1, h2 {
 
 .questions {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -315,7 +315,7 @@ h1, h2 {
 
 .results {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -378,7 +378,7 @@ h1, h2 {
 
 .end {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -432,7 +432,7 @@ h1, h2 {
 
 .leaderboard {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -484,7 +484,7 @@ h1, h2 {
 }
 
 body {
-  background: #f56d6d;
+  background: white;
   color: #1c084d;
   height: 100vh;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
