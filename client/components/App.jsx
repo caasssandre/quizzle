@@ -23,7 +23,6 @@ import { resetClock, decrementClock } from '../actions/index'
 import { incrementScore, resetScore, saveStrike } from '../actions/index'
 import { incrementRound, resetRound} from '../actions/index'
 import { addLeaderboard, resetLeaderboard} from '../actions/index'
-import NoSleep from 'nosleep.js'
   
 
 
@@ -34,24 +33,22 @@ export class App extends React.Component {
       missingPlayers:[],
       roundScores: [] 
     }
-
-     const noSleep = new NoSleep()
-
-     
   }
 
 
   componentDidMount(){ 
     // Handle browser navigation
-    
+
     window.addEventListener('popstate', () => {
       history.pushState(null, null, location.href)
       history.go(1)
     })
-
-      document.addEventListener('touchstart', function enableNoSleep() {
-        document.removeEventListener('touchstart', enableNoSleep, false)
+    const noSleep = new NoSleep()
+    console.log(noSleep)
+      
+      document.addEventListener('click', function() {
         noSleep.enable()
+        // console.log('touched')
       })
     
 
@@ -151,6 +148,7 @@ export class App extends React.Component {
   
   
   render() {
+
     return (
       
       <Router>
