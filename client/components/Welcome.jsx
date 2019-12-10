@@ -36,13 +36,6 @@ export class Welcome extends React.Component {
     }
   }
 
-  // startClick = (e) => {
-  //   e.preventDefault()
-  //   buttonClick.play()
-  //   this.props.dispatch({
-  //     type: 'INCREMENT_PAGE'
-  //   })
-  // }
 
   changePage = (event, page) => {
     event.preventDefault();

@@ -62,7 +62,7 @@ class AddScore extends React.Component {
 
                 <section className='leaderboard-btnSection'>
                     <div className='setup-btns__btn' onClick={this.playAgain}>Play Again</div>
-                    <div className='home-btns__btn' onClick={this.mainMenu}>Main menu</div>
+                    <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>
                 </section>
             </div>
         )

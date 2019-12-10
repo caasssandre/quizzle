@@ -19,8 +19,8 @@ export class Instructions extends React.Component {
                 <div className='instruct-info'>
                   <p className='instruct-info__step'>Step 1:</p>
                   <p>
-                    Create your team! One player (the team captain) needs to go to the 'Create Team'
-                    page in order to create a new team - this will generate a new team code. 
+                    Create your team! One player (the team captain) needs to make a new team on the 'Create Team'
+                    page. This will generate a new team code, which the captain should give to the rest of the team.
                   </p>
                   <p className='instruct-info__step'>Step 2:</p>
                   <p>
@@ -43,9 +43,19 @@ export class Instructions extends React.Component {
                     figure out the correct answer! You'll need to be quick about
                     it though - and answer before the time runs out!
                   </p>
+                  <p className='instruct-info__step'>Points: </p>
+                  <p className='scoring'>
+                    Each correct answer: +50 per answer
+                  </p>
+                  <p className='scoring'>
+                    Strike (all answers correct): +50 per team
+                  </p>
+                  <p className='final-step'>
+                    Streak (multiple strikes in a row): Extra for experts - get a streak and find out!
+                  </p>
                 </div>
                 <div className='home-btns__btn' onClick={(e)=>this.props.changePage(e, 'main')}>
-                  Main menu
+                  Main Menu
                 </div>
               </div>
             </section>
