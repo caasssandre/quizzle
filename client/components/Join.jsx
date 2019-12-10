@@ -34,13 +34,9 @@ import socket from '../api/socket'
     }
     else{
       getTeams().then(res => {
-        
-        this.setState({
-          message: ''
-        })
         if(this.state.team == ''){
           this.setState({
-            teamMessage:'Please enter a valid team code'
+            teamMessage:'Please enter a team code',
           })
         }
         else if(this.state.player == ''){
@@ -50,14 +46,16 @@ import socket from '../api/socket'
         }
         else if (!res.text.includes(this.state.team)) {
           this.setState({
-            message: 'This team does not exist, maybe you would like to create one?'
+            teamMessage: 'This team does not exist',
+            team: ''
           })
         }
         else {
           getPlayersByTeam(this.state.team).then(res => {
             if(JSON.parse(res.text)[0].game_started){
               this.setState({
-                message: 'This team has started playing without you!'
+                teamMessage: 'This team has started playing without you!',
+                team: ''
               })
             }
             else if (!JSON.parse(res.text).find(player => {
@@ -70,7 +68,8 @@ import socket from '../api/socket'
             }
             else {
               this.setState({
-                message: 'This username is taken - please pick a new one.'
+                userMessage: 'This username is taken',
+                player: ''
               })
             }
           })

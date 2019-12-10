@@ -24,9 +24,7 @@ io.on('connection', function(socket){
   })
 
     //DELETE PLAYER FROM DB ON PLAY AGAIN
-    socket.on('delete player', socketId =>{
-      // users.removePlayerBysocketId(socketId)
-  
+    socket.on('delete player', socketId =>{ 
       users.getTeamBySocketId(socketId).then(player => {
         if(player == undefined){
           console.log('user disconnected')
@@ -105,11 +103,6 @@ io.on('connection', function(socket){
   socket.on('reset game', teamName => {
     io.to(teamName).emit('reset game')
   })
-
-
-
-
-
 })
 
 http.listen(port, function () {
