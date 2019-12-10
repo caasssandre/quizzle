@@ -38,7 +38,7 @@ class AddScore extends React.Component {
 
     playAgain = () => {
         socket.emit('reset game', this.props.teamName)
-        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
+        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
     }
 
     mainMenu = () => {
@@ -49,7 +49,7 @@ class AddScore extends React.Component {
     render() {
         return (
             <div className="leaderboard">
-                <h1 className="leaderboard-gameTitle">Quizzical</h1>
+                {/* <h1 className="leaderboard-gameTitle">Quizzical</h1> */}
                 <h1 className="leaderboard-title">Add Score to Leaderboard</h1>
 
                 <p className="leaderboard-team">Team name:</p>

@@ -23,7 +23,7 @@ class GameEnd extends React.Component {
 
   playAgain = () => {
     socket.emit('reset game', this.props.teamName)
-    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
+    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
   }
 
   mainMenu = () => {
@@ -55,7 +55,7 @@ class GameEnd extends React.Component {
 
     return (
       <div className='end'>
-        <h1 className='end-gameTitle'>Quizzical</h1>
+        {/* <h1 className='end-gameTitle'>Quizzical</h1> */}
         <h1 className='end-title'>
           Congrats!
         </h1>
@@ -66,8 +66,6 @@ class GameEnd extends React.Component {
           <ChartistGraph className='ct-chart' data={data} options={options} type={'Pie'} />}
         <h3 className='end-scoreText'>
           Your score is {this.props.score.points}
-          {/* Your team got {this.props.score.correct} out of{' '}
-          {this.props.score.total} answers correct! */}
         </h3>
 
         {this.props.player.captain && (

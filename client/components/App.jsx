@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
+import UIfx from 'uifx'
 
+import socket from '../api/socket'
 
 import Welcome from './Welcome'
 import Game from './Game'
@@ -11,20 +13,16 @@ import Lobby from './Lobby'
 import Leaderboard from './Leaderboard'
 import StopGame from './StopGame'
 
-import socket from '../api/socket'
-
 import { saveSocketId } from '../actions/index'
 import { goToGame, goToMainMenu, incrementPage, goToStopGame} from '../actions/index'
 import { addQuestions, resetQuestions } from '../actions/index'
 import { resetPlayerResponses } from '../actions/index'
-import { clearPlayers } from '../actions/index'
 import { incrementAnswerCount, resetAnswerCount } from '../actions/index'
 import { resetClock, decrementClock } from '../actions/index'
 import { incrementScore, resetScore, saveStrike, resetStrike, saveStreak } from '../actions/index'
 import { incrementRound, resetRound, setTotalRounds} from '../actions/index'
 import { addLeaderboard, resetLeaderboard} from '../actions/index' 
-
-import UIfx from 'uifx'
+import { addPlayers, removeMissingPlayers} from '../actions/index'
 
 const cooldownfx = "/sfx/cooldown2.mp3"
 const cooldown = new UIfx(cooldownfx);
@@ -45,11 +43,12 @@ export class App extends React.Component {
       history.go(1)
     })
     
+    // Handle phone not going to sleep
     const noSleep = new NoSleep()
       document.addEventListener('touchstart', function() {
         noSleep.enable()
       })
-
+    
     // Receives socket id from server, adds to state
     socket.on('send id', id=>{
       this.props.dispatch(saveSocketId(id))
@@ -60,8 +59,10 @@ export class App extends React.Component {
       this.setState({
         missingPlayers:[...this.state.missingPlayers, player.name]
       })
-      if(!this.state.missingPlayers.includes(this.props.player.name)){
-        this.props.dispatch(goToStopGame())
+      if (this.props.pageNumber <= 4){
+        if(!this.state.missingPlayers.includes(this.props.player.name)){
+          this.props.dispatch(goToStopGame())
+        }
       }
     })
 
@@ -76,7 +77,7 @@ export class App extends React.Component {
       this.props.dispatch(resetStrike())
     })
 
-    // Page Changes
+    // Increment page
     socket.on('increment pages', () => {
       this.props.dispatch(incrementPage())
     })
@@ -87,7 +88,17 @@ export class App extends React.Component {
     })
 
     // When back-end receives 'all players in', it makes the api call to get new questions
-    socket.on('all players in', () => { 
+    socket.on('all players in', (players) => { 
+      if (this.state.missingPlayers.length != 0){ 
+        this.props.dispatch(removeMissingPlayers(this.state.missingPlayers))
+        this.props.dispatch(addPlayers(this.props.players))
+        this.setState({
+          missingPlayers: []
+        })
+      }
+      else {
+        this.props.dispatch(addPlayers(players))
+      }
       this.props.dispatch(goToGame())
     })
 
@@ -156,6 +167,14 @@ export class App extends React.Component {
   render() {
     return (      
       <Router>
+        {this.props.pageNumber != 1 &&
+        // <div className="home">
+        //   <h1 className='home-gameTitle'>Quizzical</h1>
+        // </div>:
+        <div className="questions">
+          <h1 className='questions-gameTitle'>Quizzical</h1>
+        </div>
+        }
         {this.props.pageNumber == 1 && <Welcome />}
         {this.props.pageNumber == 2 && <Lobby />}
         {this.props.pageNumber == 3 && <Game />}

@@ -48,7 +48,7 @@ class Leaderboard extends React.Component {
 
     playAgain = () => {
         socket.emit('reset game', this.props.teamName)
-        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
+        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
     }
 
     mainMenu = () => {
@@ -64,7 +64,7 @@ class Leaderboard extends React.Component {
                     :
                     (<div className="leaderboard">
 
-                        <h1 className="leaderboard-gameTitle">Quizzical</h1>
+                        {/* <h1 className="leaderboard-gameTitle">Quizzical</h1> */}
 
                         <div className='end-btns'>
                             {this.props.player.captain && (
