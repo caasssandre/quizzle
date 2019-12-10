@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
+import UIfx from 'uifx'
 
+import socket from '../api/socket'
 
 import Welcome from './Welcome'
 import Game from './Game'
@@ -11,20 +13,15 @@ import Lobby from './Lobby'
 import Leaderboard from './Leaderboard'
 import StopGame from './StopGame'
 
-import socket from '../api/socket'
-
 import { saveSocketId } from '../actions/index'
 import { goToGame, goToMainMenu, incrementPage, goToStopGame} from '../actions/index'
 import { addQuestions, resetQuestions } from '../actions/index'
 import { resetPlayerResponses } from '../actions/index'
-import { clearPlayers } from '../actions/index'
 import { incrementAnswerCount, resetAnswerCount } from '../actions/index'
 import { resetClock, decrementClock } from '../actions/index'
 import { incrementScore, resetScore, saveStrike, resetStrike, saveStreak } from '../actions/index'
 import { incrementRound, resetRound, setTotalRounds} from '../actions/index'
 import { addLeaderboard, resetLeaderboard} from '../actions/index' 
-
-import UIfx from 'uifx'
 
 const cooldownfx = "/sfx/cooldown2.mp3"
 const cooldown = new UIfx(cooldownfx);
@@ -45,11 +42,12 @@ export class App extends React.Component {
       history.go(1)
     })
     
+    // Handle phone not going to sleep
     const noSleep = new NoSleep()
       document.addEventListener('touchstart', function() {
         noSleep.enable()
       })
-
+    
     // Receives socket id from server, adds to state
     socket.on('send id', id=>{
       this.props.dispatch(saveSocketId(id))
@@ -57,11 +55,13 @@ export class App extends React.Component {
 
     // Stops game when another player leaves the team
     socket.on('user has left team', player=>{
-      this.setState({
-        missingPlayers:[...this.state.missingPlayers, player.name]
-      })
-      if(!this.state.missingPlayers.includes(this.props.player.name)){
-        this.props.dispatch(goToStopGame())
+      if (this.props.pageNumber <= 4){
+        this.setState({
+          missingPlayers:[...this.state.missingPlayers, player.name]
+        })
+        if(!this.state.missingPlayers.includes(this.props.player.name)){
+          this.props.dispatch(goToStopGame())
+        }
       }
     })
 
@@ -76,7 +76,7 @@ export class App extends React.Component {
       this.props.dispatch(resetStrike())
     })
 
-    // Page Changes
+    // Increment page
     socket.on('increment pages', () => {
       this.props.dispatch(incrementPage())
     })
