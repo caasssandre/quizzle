@@ -84,10 +84,15 @@
   height: 100%;
   border-radius: inherit;
   transition: width 1s ease-in-out;
-  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  // -webkit-animation-name: colorChange; /* Safari 4.0 - 8.0 */
   // -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
-  animation-name: colorChange;
+  // animation-name: colorChange;
   // animation-duration: 38s;
+  animation-name: colorFluctuations;
+  background: rgb(197, 164, 197);
+  animation-name: colorFluctuations;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
 }
 
 @-webkit-keyframes colorChange {
@@ -104,3 +109,17 @@
 //     @content;
 //   }
 // }
+
+@keyframes colorFluctuations {
+  0%   {background-color:rgb(197, 164, 197);}
+  10%  {background-color:rgb(241, 139, 196);}
+  20%  {background-color:rgb(236, 200, 171);}
+  30%  {background-color:rgb(196, 230, 195);}
+  40%  {background-color:rgb(216, 184, 216);}
+  50%  {background-color:rgb(151, 173, 206);}
+  60%  {background-color:rgb(139, 179, 172);}
+  70%  {background-color:rgb(205, 228, 175);}
+  80%  {background-color:rgb(204, 172, 172);}
+  90%  {background-color:rgb(207, 155, 228);}
+  100%  {background-color:rgb(197, 164, 197);}
+}
