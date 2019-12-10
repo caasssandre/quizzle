@@ -25,9 +25,23 @@ export function saveTeamName(team) {
     }
 }
 
+export function addPlayers(players){
+    return {
+        type: 'ADD_ALL_PLAYERS',
+        players,
+    }
+}
+
 export function clearPlayers(){
     return{
         type: 'CLEAR_PLAYERS'
+    }
+}
+
+export function removeMissingPlayers(missingPlayers){
+    return {
+        type: 'REMOVE_MISSING_PLAYERS',
+        missingPlayers
     }
 }
 

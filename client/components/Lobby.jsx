@@ -22,18 +22,15 @@ class Lobby extends React.Component {
         players: players
       })
     })
-    socket.on('all players in', () => {
-      this.props.dispatch({
-        type: 'ADD_ALL_PLAYERS',
-        players: this.state.players
-      })
-    })
+
   }
+
+
 
   handleClick = (e) => {
     e.preventDefault()
     socket.emit('set total rounds', {teamName: this.props.teamName, totalRounds: this.props.totalRounds})
-    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.state.players.length })
+    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.state.players.length, players:this.state.players })
   }
 
   render() {
