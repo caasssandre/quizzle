@@ -46,7 +46,7 @@ io.on('connection', function(socket){
   })
 
   socket.on('all players in', teamData=>{
-    io.to(teamData.teamName).emit('all players in')
+    io.to(teamData.teamName).emit('all players in', teamData.players)
     questions.getQuestions(teamData.numOfPlayers)
     .then(questions => {
       io.to(teamData.teamName).emit('receive questions', questions)

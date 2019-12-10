@@ -38,7 +38,7 @@ class AddScore extends React.Component {
 
     playAgain = () => {
         socket.emit('reset game', this.props.teamName)
-        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
+        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
     }
 
     mainMenu = () => {

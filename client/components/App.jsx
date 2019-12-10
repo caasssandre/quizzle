@@ -22,6 +22,7 @@ import { resetClock, decrementClock } from '../actions/index'
 import { incrementScore, resetScore, saveStrike, resetStrike, saveStreak } from '../actions/index'
 import { incrementRound, resetRound, setTotalRounds} from '../actions/index'
 import { addLeaderboard, resetLeaderboard} from '../actions/index' 
+import { addPlayers, removeMissingPlayers} from '../actions/index'
 
 const cooldownfx = "/sfx/cooldown2.mp3"
 const cooldown = new UIfx(cooldownfx);
@@ -55,10 +56,10 @@ export class App extends React.Component {
 
     // Stops game when another player leaves the team
     socket.on('user has left team', player=>{
+      this.setState({
+        missingPlayers:[...this.state.missingPlayers, player.name]
+      })
       if (this.props.pageNumber <= 4){
-        this.setState({
-          missingPlayers:[...this.state.missingPlayers, player.name]
-        })
         if(!this.state.missingPlayers.includes(this.props.player.name)){
           this.props.dispatch(goToStopGame())
         }
@@ -87,7 +88,17 @@ export class App extends React.Component {
     })
 
     // When back-end receives 'all players in', it makes the api call to get new questions
-    socket.on('all players in', () => { 
+    socket.on('all players in', (players) => { 
+      if (this.state.missingPlayers.length != 0){ 
+        this.props.dispatch(removeMissingPlayers(this.state.missingPlayers))
+        this.props.dispatch(addPlayers(this.props.players))
+        this.setState({
+          missingPlayers: []
+        })
+      }
+      else {
+        this.props.dispatch(addPlayers(players))
+      }
       this.props.dispatch(goToGame())
     })
 
