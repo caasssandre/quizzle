@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import socket from '../api/socket'
 
 import QuestionSplash from './QuestionSplash'
-import Countdown from './Countdown'
 
 import UIfx from 'uifx'
 
@@ -23,7 +22,7 @@ class Game extends React.Component {
       clock: 10,
       finishedRound: false
     }
-    this.interval
+    // this.interval
   }
 
   componentDidMount() {
@@ -86,8 +85,22 @@ class Game extends React.Component {
     socket.emit('submitted answer', this.props.teamName)
   }
 
+  // animateTimer = () => {
+  //   console.log(this.timer)
+  //   if(document.getElementsByClassName('filler')[0]){
+  //     document.getElementsByClassName('filler')[0].style.WebkitAnimationDuration =
+  //     (this.props.players.length * 20)+'s'
+  //     document.getElementsByClassName('filler')[0].style.animationDuration =
+  //     (this.props.players.length * 20)+ 's'
+  //   }
+  // }
   
+
   render() {
+    // if(this.props.clock - (this.props.players.length *20) == 0){
+    //   this.animateTimer()
+
+    // }
 
     if (this.props.clock == 0 && this.props.player.captain && this.state.finishedRound == false) {
  
@@ -102,63 +115,77 @@ class Game extends React.Component {
       countdownFx.play()
     }
 
-    return (
-      !q.trivias ? < QuestionSplash /> :
-        this.props.clock > this.props.players.length * 20 ? <QuestionSplash /> :
-          <div className='questions'>
-            <h1 className="questions-gameTitle">Quizzical</h1>
-            {/* <p className='questions-clock'>{this.props.clock}</p> */}
-            <div className="progress-bar">
-              <div style={{ width: `${this.props.clock * 100 / (this.props.players.length * 20)}%` }} className="filler"></div>
+    return !q.trivias ? (
+      <QuestionSplash />
+    ) : this.props.clock > this.props.players.length * 20 ? (
+      <QuestionSplash />
+    ) : (
+      <div className='questions'>
+        <h1 className='questions-gameTitle'>Quizzical</h1>
+        {/* <p className='questions-clock'>{this.props.clock}</p> */}
+        <div className='progress-bar'>
+          <div
+            ref={this.timer}
+            style={{
+              width: `${(this.props.clock * 100) /
+                (this.props.players.length * 20)}%`,
+                animationDuration: (this.props.players.length *20 + 's')
+            }}
+            className='filler'
+          ></div>
+        </div>
+        {q.trivias && (
+          <h2 className='questions-title'>
+            {q.trivias[this.props.player.index].question}
+          </h2>
+        )}
+        {!this.state.submittedAnswer && q.jumbledTrivias && (
+          <div className='questions-btns'>
+            <div
+              className='questions-btns__btn'
+              id={
+                q.jumbledTrivias[this.props.player.index][this.state.display1]
+              }
+              onClick={this.handleClick}
+            >
+              {q.jumbledTrivias[this.props.player.index][this.state.display1]}
             </div>
-            {q.trivias && <h2 className='questions-title'>{q.trivias[this.props.player.index].question}</h2>}
-            {!this.state.submittedAnswer && q.jumbledTrivias && (
-              <div className='questions-btns'>
-                <div
-                  className='questions-btns__btn'
-                  id={
-                    q.jumbledTrivias[this.props.player.index][this.state.display1]
-                  }
-                  onClick={this.handleClick}
-                >
-                  {q.jumbledTrivias[this.props.player.index][this.state.display1]}
-                </div>
-                <div
-                  className='questions-btns__btn'
-                  id={
-                    q.jumbledTrivias[this.props.player.index][this.state.display2]
-                  }
-                  onClick={this.handleClick}
-                >
-                  {q.jumbledTrivias[this.props.player.index][this.state.display2]}
-                </div>
-                <div
-                  className='questions-btns__btn'
-                  id={
-                    q.jumbledTrivias[this.props.player.index][this.state.display3]
-                  }
-                  onClick={this.handleClick}
-                >
-                  {q.jumbledTrivias[this.props.player.index][this.state.display3]}
-                </div>
-                <div
-                  className='questions-btns__btn'
-                  id={
-                    q.jumbledTrivias[this.props.player.index][this.state.display4]
-                  }
-                  onClick={this.handleClick}
-                >
-                  {q.jumbledTrivias[this.props.player.index][this.state.display4]}
-                </div>
-              </div>
-            )}
-
-            {this.state.submittedAnswer && (
-              <div className='questions-btns__answered'>
-                <div>{this.props.playerResponses[0].selectedAnswer}</div>
-              </div>
-            )}
+            <div
+              className='questions-btns__btn'
+              id={
+                q.jumbledTrivias[this.props.player.index][this.state.display2]
+              }
+              onClick={this.handleClick}
+            >
+              {q.jumbledTrivias[this.props.player.index][this.state.display2]}
+            </div>
+            <div
+              className='questions-btns__btn'
+              id={
+                q.jumbledTrivias[this.props.player.index][this.state.display3]
+              }
+              onClick={this.handleClick}
+            >
+              {q.jumbledTrivias[this.props.player.index][this.state.display3]}
+            </div>
+            <div
+              className='questions-btns__btn'
+              id={
+                q.jumbledTrivias[this.props.player.index][this.state.display4]
+              }
+              onClick={this.handleClick}
+            >
+              {q.jumbledTrivias[this.props.player.index][this.state.display4]}
+            </div>
           </div>
+        )}
+
+        {this.state.submittedAnswer && (
+          <div className='questions-btns__answered'>
+            <div>{this.props.playerResponses[0].selectedAnswer}</div>
+          </div>
+        )}
+      </div>
     )
   }
 }
