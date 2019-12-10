@@ -29,7 +29,7 @@ class AddScore extends React.Component {
         }
         else{
             let teamScore = this.props.score.points
-            socket.emit('add to leaderboard', { teamName: this.state.team, teamCode: this.props.teamName, teamSize: this.props.players.length, teamScore: teamScore })
+            socket.emit('add to leaderboard', { teamName: this.state.team, teamCode: this.props.teamName, teamSize: this.props.players.length, teamScore: teamScore, totalRounds: this.props.totalRounds })
             this.setState({
                 buttonClicked:true
             })
@@ -73,7 +73,8 @@ function mapStateToProps(state) {
     return {
         players: state.players,
         teamName: state.teamName,
-        score: state.score
+        score: state.score,
+        totalRounds: state.totalRounds
     }
 }
 

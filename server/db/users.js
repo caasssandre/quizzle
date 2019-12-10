@@ -33,11 +33,17 @@ function removePlayer(id, db = connection){
   .del().then(res=>res)
 }
 
+function removePlayerBySocketId(socketId, db = connection){
+  return db('users').where('socket_id', socketId)
+  .del().then(res=>res)
+}
+
 module.exports = {
   addPlayerToTeam,
   getPlayersFromTeam,
   getTeams,
   userInGame,
   getTeamBySocketId,
-  removePlayer
+  removePlayer,
+  removePlayerBySocketId
 }

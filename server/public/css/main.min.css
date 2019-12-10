@@ -31,7 +31,7 @@ h1, h2 {
 }
 
 .home-logo__pic {
-  height: 16rem;
+  height: 35vh;
 }
 
 .home-btns {
@@ -251,6 +251,11 @@ h1, h2 {
   font-size: 1.5rem;
 }
 
+.loading-questionCount {
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
 .loading-art {
   padding-top: 10vh;
 }
@@ -262,6 +267,32 @@ h1, h2 {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+}
+
+.questions-countdown {
+  font-family: 'Wallpoet', sans-serif;
+  font-size: 3.5rem;
+  color: #c93850;
+}
+
+.questions-countdown__circle {
+  width: 8rem;
+  height: 8rem;
+  background: #4ad9de;
+  border-radius: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
+  margin-top: 7rem;
+  border: solid 3px #27086e;
 }
 
 .questions-gameTitle {
@@ -280,7 +311,7 @@ h1, h2 {
 }
 
 .questions-clock {
-  padding-top: .2rem;
+  padding-top: 0.2rem;
   font-size: 2rem;
   margin: 1rem;
 }
@@ -294,7 +325,7 @@ h1, h2 {
 
 .questions-btns__btn {
   font-family: 'Varela Round', sans-serif;
-  margin: .2rem;
+  margin: 0.2rem;
   background-color: #4ad9de;
   text-decoration: none;
   padding: 8px 10px;
@@ -304,7 +335,7 @@ h1, h2 {
 
 .questions-btns__answered {
   font-family: 'Varela Round', sans-serif;
-  margin: .2rem;
+  margin: 0.2rem;
   background-color: transparent;
   text-decoration: none;
   padding: 8px 10px;
@@ -367,14 +398,15 @@ h1, h2 {
 
 .results-question {
   font-size: 1.4rem;
-  padding-top: 3rem;
-  padding-bottom: 8vh;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .results-points {
-  margin-top: 4rem;
+  line-height: 1.3;
+  margin-top: 3rem;
 }
 
 .results-answers {
@@ -387,8 +419,7 @@ h1, h2 {
 }
 
 .results-noAnswer {
-  margin-top: 25vh;
-  margin-bottom: 10vh;
+  margin-top: 4rem;
   line-height: 1.5;
 }
 

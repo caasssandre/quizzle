@@ -16,10 +16,11 @@ class QuestionSplash extends React.Component {
         <main>
           <div className='loading'>
             <h1 className='loading-gameTitle'>Quizzical</h1>
-            <h1 className='loading-text'>Loading Question {this.props.roundCount} / {this.props.totalRounds}</h1>
+            <h1 className='loading-text'>Loading Question</h1>
+            <h1 className='loading-questionCount'>{this.props.roundCount} / {this.props.totalRounds}</h1>
+            {this.props.questions.trivias ? <Countdown /> :
             <div className='loading-art'>
               <div className='lds-grid'>
-                {this.props.questions.trivias ? <Countdown /> :
                   <>
                     <div></div>
                     <div></div>
@@ -30,9 +31,10 @@ class QuestionSplash extends React.Component {
                     <div></div>
                     <div></div>
                     <div></div>
-                  </>}
+            </>
               </div>
             </div>
+            }
           </div>
         </main>
       </>

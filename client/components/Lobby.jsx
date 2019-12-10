@@ -16,7 +16,6 @@ class Lobby extends React.Component {
 
   componentDidMount() {
     socket.on('show players in lobby', players => {
-      console.log('here!!');
       join.play();
       
       this.setState({

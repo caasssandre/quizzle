@@ -1,10 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { goToMainMenu, resetQuestions } from '../actions'
+import { goToMainMenu, resetQuestions, clearPlayers, resetPlayerResponses, resetLeaderboard , resetClock, resetAnswerCount, resetScore} from '../actions'
+import socket from '../api/socket'
 
 class StopGame extends React.Component {
   constructor(props) {
     super(props)
+  }
+
+  reStartGame = () => {
+    socket.emit('delete user', this.props.socketId)
+    this.props.dispatch(goToMainMenu())
+    this.props.dispatch(resetQuestions())
+    this.props.dispatch(resetLeaderboard())
+    this.props.dispatch(resetAnswerCount())
+    this.props.dispatch(resetScore())
   }
 
   render() {
@@ -19,7 +29,7 @@ class StopGame extends React.Component {
             )
           })}
         <section>
-          <div className='lobby-btn' onClick={()=>window.location.reload()}>
+          <div className='lobby-btn' onClick={this.reStartGame}>
             Go back to main screen
                 </div>
         </section>
@@ -28,4 +38,10 @@ class StopGame extends React.Component {
   }
 }
 
-export default connect()(StopGame)
+function mapStateToProps(state){
+  return{
+    socketId: state.socketId
+  }
+}
+
+export default connect(mapStateToProps)(StopGame)

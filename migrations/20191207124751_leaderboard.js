@@ -5,6 +5,7 @@ exports.up = (knex, promise) => {
         table.string('teamName')
         table.float('teamScore')
         table.integer('teamSize')
+        table.integer('totalRounds')
     })
   };
   

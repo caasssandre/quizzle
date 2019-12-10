@@ -20,18 +20,14 @@ import { resetPlayerResponses } from '../actions/index'
 import { clearPlayers } from '../actions/index'
 import { incrementAnswerCount, resetAnswerCount } from '../actions/index'
 import { resetClock, decrementClock } from '../actions/index'
-import { incrementScore, resetScore, saveStrike, saveStreak } from '../actions/index'
+import { incrementScore, resetScore, saveStrike, resetStrike, saveStreak } from '../actions/index'
 import { incrementRound, resetRound, setTotalRounds} from '../actions/index'
-import { addLeaderboard, resetLeaderboard} from '../actions/index'
-  
-
+import { addLeaderboard, resetLeaderboard} from '../actions/index' 
 
 import UIfx from 'uifx'
 
 const cooldownfx = "/sfx/cooldown2.mp3"
 const cooldown = new UIfx(cooldownfx);
-
-
 
 export class App extends React.Component {
   constructor(props) {
@@ -39,16 +35,11 @@ export class App extends React.Component {
     this.state={
       missingPlayers:[],
       roundScores: [] 
-    }
-
-
-     
+    }     
   }
 
-
   componentDidMount(){ 
-    // Handle browser navigation
-    
+    // Handle browser navigation    
     window.addEventListener('popstate', () => {
       history.pushState(null, null, location.href)
       history.go(1)
@@ -81,6 +72,7 @@ export class App extends React.Component {
       this.props.dispatch(resetRound())
       this.props.dispatch(resetScore())
       this.props.dispatch(resetLeaderboard())
+      this.props.dispatch(resetStrike())
     })
 
     // Page Changes
@@ -158,13 +150,10 @@ export class App extends React.Component {
     socket.on('receive leaderboard', leaderboard => {
       this.props.dispatch(addLeaderboard(leaderboard))
     })
-  }
-
-  
+  }  
   
   render() {
-    return (
-      
+    return (      
       <Router>
         {this.props.pageNumber == 1 && <Welcome />}
         {this.props.pageNumber == 2 && <Lobby />}

@@ -79,7 +79,7 @@ io.on('connection', function(socket){
   // LEADERBOARD
   socket.on('add to leaderboard', teamData => {
     leaderboard.addToLeaderboard(teamData).then(() => {
-      leaderboard.getLeaderboard(teamData.teamSize).then(leaders => {
+      leaderboard.getLeaderboard(teamData.teamSize, teamData.totalRounds).then(leaders => {
         io.to(teamData.teamCode).emit('receive leaderboard', leaders)
       })
     })
@@ -90,6 +90,10 @@ io.on('connection', function(socket){
     io.to(teamName).emit('reset game')
   })
 
+  //DELETE PLAYER FROM DB ON PLAY AGAIN
+  socket.on('delete player', socketId =>{
+    users.removePlayerBysocketId(socketId)
+  })
 })
 
 http.listen(port, function () {

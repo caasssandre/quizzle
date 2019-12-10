@@ -42,11 +42,11 @@
 ### Stretch
 * [x] Results shown in pie chart
 * [x] Randomly generate team names
-* [ ] Timer is represented by colour/shape change
-* [ ] I want to see a leaderboard
-* [ ] I want to choose the difficulty of the game
-* [ ] I want to choose how many round I can play
-* [ ] Delete users after a certain time. See docs [Cron](https://scotch.io/tutorials/nodejs-cron-jobs-by-examples)
+* [x] Timer is represented by colour/shape change
+* [x] I want to see a leaderboard
+* [x] I want to choose how many rounds I can play
+* [ ] Delete users after a certain time
+* [ ] Handle user disconnects
 ---
 
 ## Views (Client Side)

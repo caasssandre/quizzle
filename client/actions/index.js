@@ -126,6 +126,12 @@ export function saveStrike(strike) {
     }
 }
 
+export function resetStrike(){
+    return {
+        type: 'RESET_STRIKE'
+    }
+}
+
 export function saveStreak(streak) {
     return {
         type: 'STREAK',

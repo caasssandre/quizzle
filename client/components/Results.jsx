@@ -44,7 +44,7 @@ class Results extends React.Component {
       } else {
         incorrect.play()
       }
-    }, 2000)
+    }, 1000)
   }
 
   nextQuestion = () => {
@@ -71,18 +71,19 @@ class Results extends React.Component {
       return < ResultSplash />
     }
     else {
-      console.log(this.props.questions)
       return (
         <div className='results'>
           <h1 className='results-gameTitle'>Quizzical</h1>
-          {this.props.strike && <h2 className="results-points">Strike!! +50 pts</h2>}
-          {this.props.strike * this.props.strikeCount > 0 &&
-            <h4>
-              You're on a roll! {this.props.strikeCount + 1} strikes in a row!
-              +{(this.props.strikeCount) * 50} pts.
-            </h4>}
+
           {response != undefined ? (
             <div>
+              <div className='results-points'>
+              {response.correctAnswer == response.selectedAnswer && <h4>+50 pts</h4>}
+              {this.props.strike && <h4>STRIKE! +50 pts</h4>}
+              {this.props.strike * this.props.strikeCount > 0 &&
+                <h4>STREAK x{this.props.strikeCount + 1}! +{(this.props.strikeCount) * 50} pts</h4>
+              }
+              </div>
               <h2 className='results-question'>{response.question}</h2>
               {response.correctAnswer == response.selectedAnswer ? (
                 <div className='results-answers'>
@@ -99,10 +100,10 @@ class Results extends React.Component {
               <div>
                 <h1 className='results-noAnswer'>Be quicker next time!</h1>
                 {this.props.questions.jumbledTrivias &&
-                <>
-                <h2 className='results-question'>{this.props.questions.jumbledTrivias[this.props.player.index].question}</h2>
-                <h3>Correct: {this.props.questions.jumbledTrivias[this.props.player.index].correctAnswer}</h3>
-                </>
+                  <>
+                    <h2 className='results-question'>{this.props.questions.jumbledTrivias[this.props.player.index].question}</h2>
+                    <h3>Correct: {this.props.questions.jumbledTrivias[this.props.player.index].correctAnswer}</h3>
+                  </>
                 }
               </div>
             )}
