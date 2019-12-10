@@ -12,7 +12,7 @@ class ResultSplash extends React.Component {
     return (
       <main>
         <div className='loading'>
-          <h1 className='loading-gameTitle'>Quizzical</h1>
+          {/* <h1 className='loading-gameTitle'>Quizzical</h1> */}
           <div className='home-logo'>
             <img
               className='home-logo__pic2'

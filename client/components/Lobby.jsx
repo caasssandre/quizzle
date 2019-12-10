@@ -40,7 +40,7 @@ class Lobby extends React.Component {
     return (
       <main>
         <section className='lobby'>
-          <h1 className='lobby-gameTitle'>Quizzical</h1>
+          {/* <h1 className='lobby-gameTitle'>Quizzical</h1> */}
 
           {!this.props.player.captain &&
             <>

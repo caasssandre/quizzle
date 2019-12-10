@@ -49,7 +49,7 @@ class AddScore extends React.Component {
     render() {
         return (
             <div className="leaderboard">
-                <h1 className="leaderboard-gameTitle">Quizzical</h1>
+                {/* <h1 className="leaderboard-gameTitle">Quizzical</h1> */}
                 <h1 className="leaderboard-title">Add Score to Leaderboard</h1>
 
                 <p className="leaderboard-team">Team name:</p>

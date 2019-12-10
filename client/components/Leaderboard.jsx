@@ -64,7 +64,7 @@ class Leaderboard extends React.Component {
                     :
                     (<div className="leaderboard">
 
-                        <h1 className="leaderboard-gameTitle">Quizzical</h1>
+                        {/* <h1 className="leaderboard-gameTitle">Quizzical</h1> */}
 
                         <div className='end-btns'>
                             {this.props.player.captain && (

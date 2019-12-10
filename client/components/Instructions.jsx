@@ -13,7 +13,7 @@ export class Instructions extends React.Component {
         return (
           <main>
             <section className='home instruct'>
-              <h1 className='home-gameTitle'>Quizzical</h1>
+              <h1 className='setup-gameTitle'>Quizzical</h1>
               <div className='instruct'>
                 <h3 className='instruct-subTitle'>Instructions:</h3>
                 <div className='instruct-info'>

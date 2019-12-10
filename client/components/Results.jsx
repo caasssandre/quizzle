@@ -73,7 +73,7 @@ class Results extends React.Component {
     else {
       return (
         <div className='results'>
-          <h1 className='results-gameTitle'>Quizzical</h1>
+          {/* <h1 className='results-gameTitle'>Quizzical</h1> */}
 
           {response != undefined ? (
             <div>

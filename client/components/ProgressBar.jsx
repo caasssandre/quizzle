@@ -2,10 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 class ProgressBar extends React.Component {
-  constructor() {
+  constructor(props) {
     super(props)
   }
   render() {
+    return(
     <div className='progress-bar'>
       <div
         ref={this.timer}
@@ -17,6 +18,15 @@ class ProgressBar extends React.Component {
         className='filler'
       ></div>
     </div>
+
+    )
+  }
+}
+
+function mapStateToProps(state){
+  return{
+    clock: state.clock,
+    players: state.players,
   }
 }
 

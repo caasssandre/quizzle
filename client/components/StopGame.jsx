@@ -21,7 +21,7 @@ class StopGame extends React.Component {
   render() {
     return (
       <div className="lobby">
-        <h1 className='lobby-gameTitle'>Quizzical</h1>
+        {/* <h1 className='lobby-gameTitle'>Quizzical</h1> */}
         <h2 className='lobby-title'>Oops it looks like somebody has closed their page!</h2>
         {this.props.players &&
           this.props.players.map(player => {

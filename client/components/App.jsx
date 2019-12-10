@@ -156,6 +156,14 @@ export class App extends React.Component {
   render() {
     return (      
       <Router>
+        {this.props.pageNumber != 1 &&
+        // <div className="home">
+        //   <h1 className='home-gameTitle'>Quizzical</h1>
+        // </div>:
+        <div className="questions">
+          <h1 className='questions-gameTitle'>Quizzical</h1>
+        </div>
+        }
         {this.props.pageNumber == 1 && <Welcome />}
         {this.props.pageNumber == 2 && <Lobby />}
         {this.props.pageNumber == 3 && <Game />}
