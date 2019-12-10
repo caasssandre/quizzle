@@ -9,12 +9,13 @@ class StopGame extends React.Component {
   }
 
   reStartGame = () => {
-    socket.emit('delete user', this.props.socketId)
+    socket.emit('delete player', this.props.socketId)
     this.props.dispatch(goToMainMenu())
     this.props.dispatch(resetQuestions())
     this.props.dispatch(resetLeaderboard())
     this.props.dispatch(resetAnswerCount())
     this.props.dispatch(resetScore())
+    this.props.dispatch(clearPlayers())
   }
 
   render() {
@@ -40,7 +41,7 @@ class StopGame extends React.Component {
 
 function mapStateToProps(state){
   return{
-    socketId: state.socketId
+    socketId: state.player.socketId
   }
 }
 

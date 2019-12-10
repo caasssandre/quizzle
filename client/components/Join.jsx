@@ -34,30 +34,28 @@ import socket from '../api/socket'
     }
     else{
       getTeams().then(res => {
-        
-        this.setState({
-          message: ''
-        })
         if(this.state.team == ''){
           this.setState({
-            message:'Please enter a valid team code'
+            teamMessage:'Please enter a team code',
           })
         }
         else if(this.state.player == ''){
           this.setState({
-            message:'Please enter a username'
+            userMessage:'Please enter a username'
           })
         }
         else if (!res.text.includes(this.state.team)) {
           this.setState({
-            message: 'This team does not exist, maybe you would like to create one?'
+            teamMessage: 'This team does not exist',
+            team: ''
           })
         }
         else {
           getPlayersByTeam(this.state.team).then(res => {
             if(JSON.parse(res.text)[0].game_started){
               this.setState({
-                message: 'This team has started playing without you!'
+                teamMessage: 'This team has started playing without you!',
+                team: ''
               })
             }
             else if (!JSON.parse(res.text).find(player => {
@@ -70,7 +68,8 @@ import socket from '../api/socket'
             }
             else {
               this.setState({
-                message: 'This username is taken - please pick a new one.'
+                userMessage: 'This username is taken',
+                player: ''
               })
             }
           })
@@ -104,6 +103,7 @@ import socket from '../api/socket'
                 className='setup-team__fields'
                 type='text'
                 name='team'
+                placeholder={this.state.teamMessage}
                 onChange={this.handleChange}
                 value={this.state.team}
               />
@@ -115,6 +115,7 @@ import socket from '../api/socket'
                 className='setup-user__fields'
                 type='text'
                 name='player'
+                placeholder={this.state.userMessage}
                 onChange={this.handleChange}
                 value={this.state.player}
               />
@@ -146,9 +147,9 @@ import socket from '../api/socket'
                 Main menu
               </div>
             </section>
-            {this.state.message != '' && (
+            {/* {this.state.message != '' && (
               <h2 className='setup-errorMessage'>{this.state.message}</h2>
-            )}
+            )} */}
           </form>
         </section>
       </main>

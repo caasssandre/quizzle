@@ -57,11 +57,12 @@ export class App extends React.Component {
 
     // Stops game when another player leaves the team
     socket.on('user has left team', player=>{
-      this.props.dispatch(goToStopGame())
-      this.props.dispatch(clearPlayers())
       this.setState({
         missingPlayers:[...this.state.missingPlayers, player.name]
       })
+      if(!this.state.missingPlayers.includes(this.props.player.name)){
+        this.props.dispatch(goToStopGame())
+      }
     })
 
     // Reset game
@@ -172,7 +173,8 @@ function mapStateToProps(state) {
     pageNumber: state.pageNumber,
     clock: state.clock,
     players: state.players,
-    strikeCount: state.strikeCount
+    strikeCount: state.strikeCount,
+    player: state.player
   }
 }
 
