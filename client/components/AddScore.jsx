@@ -29,7 +29,7 @@ class AddScore extends React.Component {
         }
         else{
             let teamScore = this.props.score.points
-            socket.emit('add to leaderboard', { teamName: this.state.team, teamCode: this.props.teamName, teamSize: this.props.players.length, teamScore: teamScore })
+            socket.emit('add to leaderboard', { teamName: this.state.team, teamCode: this.props.teamName, teamSize: this.props.players.length, teamScore: teamScore, totalRounds: this.props.totalRounds })
             this.setState({
                 buttonClicked:true
             })
@@ -62,7 +62,7 @@ class AddScore extends React.Component {
 
                 <section className='leaderboard-btnSection'>
                     <div className='setup-btns__btn' onClick={this.playAgain}>Play Again</div>
-                    <div className='home-btns__btn' onClick={this.mainMenu}>Main menu</div>
+                    <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>
                 </section>
             </div>
         )
@@ -73,7 +73,8 @@ function mapStateToProps(state) {
     return {
         players: state.players,
         teamName: state.teamName,
-        score: state.score
+        score: state.score,
+        totalRounds: state.totalRounds
     }
 }
 

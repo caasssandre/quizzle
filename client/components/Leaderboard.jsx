@@ -10,27 +10,37 @@ let colors = ['#FFB900', '#69797E', '#847545', '#0078D7', '#0099BC', '#7A7574', 
     '#567C73', '#647C64', '#EF6950', '#BF0077', '#744DA9', '#018574', '#486860', '#525E54', '#D13438', '#C239B3',
     '#B146C2', '#00CC6A', '#498205', '#FF4343', '#9A0089', '#881798', '#10893E', '#107C10', '#7E735F'];
 
-
-
 class Leaderboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             leaders: [],
             maxScore: 0,
+            gameLength: ""
         };
     }
 
     componentDidMount() {
-        socket.on('receive leaderboard', leaders=>{
+        socket.on('receive leaderboard', leaders => {
             let highScore = 0
             leaders.map(leader => {
                 if (leader.teamScore > highScore) {
                     highScore = leader.teamScore
                 }
             })
+            let gameLength = ""
+            if (leaders[0].totalRounds == 2){
+                gameLength = "Short"
+            }
+            else if (leaders[0].totalRounds == 5){
+                gameLength = "Medium"
+            }
+            else {
+                gameLength = "Long"
+            }
             this.setState({
-                maxScore: highScore
+                maxScore: highScore,
+                gameLength: gameLength
             })
 
         })
@@ -47,11 +57,6 @@ class Leaderboard extends React.Component {
     }
 
     render() {
-
-
-
-
-
         return (
             <>
                 {this.props.leaders.length == 0 ?
@@ -75,7 +80,7 @@ class Leaderboard extends React.Component {
                         </div>
 
                         <h1 className='leaderboard-title'>Leaderboard</h1>
-                        <h3 className='leaderboard-teamSize'>{this.props.players.length} Person Teams</h3>
+                        <h3 className='leaderboard-teamSize'>{this.props.players.length} Person {this.state.gameLength} Games</h3>
                         <div className="leaders">
 
                             {this.props.leaders.map((leader, i) => (

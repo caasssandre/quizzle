@@ -3,14 +3,23 @@ import ChartistGraph from 'react-chartist'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
 
+import UIfx from 'uifx'
+
+
+const gameEndFile = "/sfx/win.mp3"
+const gameEndFx = new UIfx(gameEndFile);
+
 class GameEnd extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      buttonClicked : false
+      buttonClicked: false
     }
   }
 
+  componentDidMount(){
+    gameEndFx.play()
+  }
 
   playAgain = () => {
     socket.emit('reset game', this.props.teamName)
@@ -23,13 +32,13 @@ class GameEnd extends React.Component {
   }
 
   leaderboard = () => {
-    if(this.state.buttonClicked == true){
+    if (this.state.buttonClicked == true) {
       // do nothing
     }
-    else{
+    else {
       socket.emit('increment pages', this.props.teamName)
       this.setState({
-        buttonClicked:true
+        buttonClicked: true
       })
     }
   }
@@ -50,8 +59,10 @@ class GameEnd extends React.Component {
         <h1 className='end-title'>
           Congrats!
         </h1>
-        {/* <h5>Your score is {this.props.score.points}</h5> */}
-        {this.props.score.points == 0 ? <h3 className='end-allIncorrect'>Oops, you didn't get any answers correct...</h3> :
+        {this.props.score.points == 0 ?
+        <h3 className='end-allIncorrect'>Oops, you didn't get any answers correct...</h3> :
+        this.props.score.correct == this.props.score.total ?
+        <h3 className='end-allIncorrect'>Impressive, you got all of the answers correct!</h3> :
           <ChartistGraph className='ct-chart' data={data} options={options} type={'Pie'} />}
         <h3 className='end-scoreText'>
           Your score is {this.props.score.points}
@@ -60,11 +71,16 @@ class GameEnd extends React.Component {
         </h3>
 
         {this.props.player.captain && (
-          <div className='home-btns'>
-            <div className='home-btns__btn' onClick={this.leaderboard}>Leaderboard</div>
-            <div className='home-btns__btn' onClick={this.playAgain}>Play Again!!</div>
-            <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>
-          </div>
+          <>
+            <div className='home-btns'>
+              <div className='home-btns__btn' onClick={this.leaderboard}>Submit Score</div>
+            </div>
+
+            <section className='leaderboard-btnSection'>
+              <div className='setup-btns__btn' onClick={this.playAgain}>Play Again</div>
+              <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>
+            </section>
+          </>
         )}
       </div>
     )

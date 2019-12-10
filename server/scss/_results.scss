@@ -13,14 +13,15 @@
 
   &-question {
     font-size: 1.4rem;
-    padding-top: 3rem;
-    padding-bottom: 8vh;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
     margin-bottom: 1rem;
     line-height: 1.2;
   }
 
   &-points {
-    margin-top: 4rem;
+    line-height: 1.3;
+    margin-top: 3rem;
   }
 
   &-answers {
@@ -33,8 +34,7 @@
   }
 
   &-noAnswer {
-    margin-top:25vh;
-    margin-bottom: 10vh;
+    margin-top:4rem;
     line-height: 1.5;
   }
 

@@ -7,8 +7,10 @@ class Countdown extends React.Component {
   }
 
   render(){
-    return(
-      <h1>{this.props.clock - this.props.players.length*20}</h1>
+    return (
+      <div className='questions-countdown__circle'>
+        <h1 className='questions-countdown'>{this.props.clock - this.props.players.length * 20}</h1>
+      </div>
     )
   }
 }

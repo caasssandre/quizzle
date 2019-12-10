@@ -28,10 +28,11 @@
     }
 
     &-join {
-      position: absolute;
-      bottom: 3vh;
-      left: 50%;
-      margin-left: -100px;
+      // position: absolute;
+      // bottom: 3vh;
+      // left: 50%;
+      // margin-left: -100px;
+      margin-top: 2rem;
     }
 
     &-team {
@@ -89,4 +90,13 @@
       line-height: 1.5;
     }
 
+}
+
+@media (min-height: 500px) {
+  .setup-join {
+    position: absolute;
+    bottom: 3vh;
+    left: 50%;
+    margin-left: -100px;
+  }
 }

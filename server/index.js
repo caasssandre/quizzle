@@ -23,6 +23,20 @@ io.on('connection', function(socket){
     })
   })
 
+    //DELETE PLAYER FROM DB ON PLAY AGAIN
+    socket.on('delete player', socketId =>{ 
+      users.getTeamBySocketId(socketId).then(player => {
+        if(player == undefined){
+          console.log('user disconnected')
+        }
+        else{
+          console.log(player.name + ' disconnected')
+          io.to(player.team).emit('user has left team', player)
+          users.removePlayer(player.id)
+        }
+      })
+    })
+
   socket.on('join team', teamName =>{
     socket.join(teamName)
   })
@@ -46,6 +60,11 @@ io.on('connection', function(socket){
     .then(questions => {
       io.to(teamData.teamName).emit('receive questions', questions)
     })
+  })
+
+  // HANDLE ROUNDS
+  socket.on('set total rounds', data=> {
+    io.to(data.teamName).emit('receive total rounds', data.totalRounds)
   })
 
   // HANDLE ANSWER SUBMISSION
@@ -74,7 +93,7 @@ io.on('connection', function(socket){
   // LEADERBOARD
   socket.on('add to leaderboard', teamData => {
     leaderboard.addToLeaderboard(teamData).then(() => {
-      leaderboard.getLeaderboard(teamData.teamSize).then(leaders => {
+      leaderboard.getLeaderboard(teamData.teamSize, teamData.totalRounds).then(leaders => {
         io.to(teamData.teamCode).emit('receive leaderboard', leaders)
       })
     })
@@ -84,7 +103,6 @@ io.on('connection', function(socket){
   socket.on('reset game', teamName => {
     io.to(teamName).emit('reset game')
   })
-
 })
 
 http.listen(port, function () {

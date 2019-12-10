@@ -1,6 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
+import UIfx from 'uifx'
+
+const joinfx = "/sfx/playerJoin.mp3"
+const join = new UIfx(joinfx);
 
 class Lobby extends React.Component {
   constructor(props) {
@@ -12,6 +16,8 @@ class Lobby extends React.Component {
 
   componentDidMount() {
     socket.on('show players in lobby', players => {
+      join.play();
+      
       this.setState({
         players: players
       })
@@ -26,6 +32,7 @@ class Lobby extends React.Component {
 
   handleClick = (e) => {
     e.preventDefault()
+    socket.emit('set total rounds', {teamName: this.props.teamName, totalRounds: this.props.totalRounds})
     socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.state.players.length })
   }
 
@@ -62,7 +69,7 @@ class Lobby extends React.Component {
           </div>
           {this.props.player.captain &&
             <div className='lobby-btn' onClick={this.handleClick}>
-              All players are in!
+              All Players Are In!
             </div>
           }
 
@@ -76,7 +83,8 @@ function mapStateToProps(state) {
   return {
     teamName: state.teamName,
     player: state.player,
-    players: state.players
+    players: state.players,
+    totalRounds: state.totalRounds
   }
 }
 

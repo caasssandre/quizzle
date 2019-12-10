@@ -126,6 +126,19 @@ export function saveStrike(strike) {
     }
 }
 
+export function resetStrike(){
+    return {
+        type: 'RESET_STRIKE'
+    }
+}
+
+export function saveStreak(streak) {
+    return {
+        type: 'STREAK',
+        streak
+    }
+}
+
 // ROUNDS
 export function incrementRound() {
     return {
@@ -136,6 +149,14 @@ export function incrementRound() {
 export function resetRound() {
     return {
         type: 'RESET_ROUND'
+    }
+}
+
+// Total Rounds
+export function setTotalRounds(totalRounds) {
+    return {
+        type: 'SET_TOTAL_ROUNDS',
+        totalRounds
     }
 }
 
@@ -152,3 +173,4 @@ export function resetLeaderboard() {
         type: 'RESET_LEADERBOARD',
     }
 }
+

@@ -39,5 +39,5 @@ module.exports = {
   getTeams,
   userInGame,
   getTeamBySocketId,
-  removePlayer
+  removePlayer,
 }

@@ -20,9 +20,14 @@ import { resetPlayerResponses } from '../actions/index'
 import { clearPlayers } from '../actions/index'
 import { incrementAnswerCount, resetAnswerCount } from '../actions/index'
 import { resetClock, decrementClock } from '../actions/index'
-import { incrementScore, resetScore, saveStrike } from '../actions/index'
-import { incrementRound, resetRound} from '../actions/index'
-import { addLeaderboard, resetLeaderboard} from '../actions/index'
+import { incrementScore, resetScore, saveStrike, resetStrike, saveStreak } from '../actions/index'
+import { incrementRound, resetRound, setTotalRounds} from '../actions/index'
+import { addLeaderboard, resetLeaderboard} from '../actions/index' 
+
+import UIfx from 'uifx'
+
+const cooldownfx = "/sfx/cooldown2.mp3"
+const cooldown = new UIfx(cooldownfx);
 
 export class App extends React.Component {
   constructor(props) {
@@ -30,15 +35,20 @@ export class App extends React.Component {
     this.state={
       missingPlayers:[],
       roundScores: [] 
-    }
+    }     
   }
 
   componentDidMount(){ 
-    // Handle browser navigation
+    // Handle browser navigation    
     window.addEventListener('popstate', () => {
       history.pushState(null, null, location.href)
       history.go(1)
     })
+    
+    const noSleep = new NoSleep()
+      document.addEventListener('touchstart', function() {
+        noSleep.enable()
+      })
 
     // Receives socket id from server, adds to state
     socket.on('send id', id=>{
@@ -47,11 +57,12 @@ export class App extends React.Component {
 
     // Stops game when another player leaves the team
     socket.on('user has left team', player=>{
-      this.props.dispatch(goToStopGame())
-      this.props.dispatch(clearPlayers())
       this.setState({
         missingPlayers:[...this.state.missingPlayers, player.name]
       })
+      if(!this.state.missingPlayers.includes(this.props.player.name)){
+        this.props.dispatch(goToStopGame())
+      }
     })
 
     // Reset game
@@ -62,6 +73,7 @@ export class App extends React.Component {
       this.props.dispatch(resetRound())
       this.props.dispatch(resetScore())
       this.props.dispatch(resetLeaderboard())
+      this.props.dispatch(resetStrike())
     })
 
     // Page Changes
@@ -79,6 +91,11 @@ export class App extends React.Component {
       this.props.dispatch(goToGame())
     })
 
+    // Set total rounds
+    socket.on('receive total rounds', totalRounds => {
+      this.props.dispatch(setTotalRounds(totalRounds))
+    })
+
     // Prepare game to start new round
     // When back-end receives 'new question', it makes the api call to get new questions
     socket.on('new question', () => {      
@@ -93,6 +110,8 @@ export class App extends React.Component {
     socket.on('receive questions', questions => {
       this.props.dispatch(resetClock(this.props.players.length))
       this.props.dispatch(addQuestions(questions))
+      cooldown.play()
+
       this.interval = setInterval(() => {
         if (this.props.clock == 0 || this.props.pageNumber != 3) {
           clearInterval(this.interval)
@@ -118,6 +137,7 @@ export class App extends React.Component {
     socket.on('check for strike', ()=>{
       if(!this.state.roundScores.includes(0)){
         this.props.dispatch(saveStrike(1))
+        this.props.dispatch(saveStreak(this.props.strikeCount))
       }
       else{
         this.props.dispatch(saveStrike(0))
@@ -131,11 +151,10 @@ export class App extends React.Component {
     socket.on('receive leaderboard', leaderboard => {
       this.props.dispatch(addLeaderboard(leaderboard))
     })
-  }
+  }  
   
   render() {
-    return (
-      
+    return (      
       <Router>
         {this.props.pageNumber == 1 && <Welcome />}
         {this.props.pageNumber == 2 && <Lobby />}
@@ -154,6 +173,8 @@ function mapStateToProps(state) {
     pageNumber: state.pageNumber,
     clock: state.clock,
     players: state.players,
+    strikeCount: state.strikeCount,
+    player: state.player
   }
 }
 
