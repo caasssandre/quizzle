@@ -11,12 +11,15 @@ const reducer = (state = 1, action) => {
       }
       case 'START_GAME':{
         return 3
-    }
-    case 'MAIN_MENU': {
-      return 1
-    }
-      default: return state
-    }
+      }
+      case 'MAIN_MENU': {
+        return 1
+      }
+      case 'STOP_GAME': {
+        return 7
+      }
+        default: return state
+      }
   }
   
   export default reducer

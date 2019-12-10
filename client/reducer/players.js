@@ -3,7 +3,9 @@ const reducer = (state = [], action) => {
       case 'ADD_ALL_PLAYERS':{
         return action.players
       }
-
+      case 'CLEAR_PLAYERS':{
+        return []
+      }
       default: return state
     }
   }

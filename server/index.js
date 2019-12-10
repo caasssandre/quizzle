@@ -3,14 +3,39 @@ const http = require('http').createServer(server)
 const io = require('socket.io')(http)
 const questions = require('./routes/questions')
 const users = require('./db/users')
+const leaderboard = require('./db/leaderboard')
 
 const port = process.env.PORT || 3000
 
 io.on('connection', function(socket){
+  socket.emit('send id', socket.id)
   console.log('a user has connected')
   socket.on('disconnect', function(){
-    console.log('user disconnected')
+    users.getTeamBySocketId(socket.id).then(player => {
+      if(player == undefined){
+        console.log('user disconnected')
+      }
+      else{
+        console.log(player.name + ' disconnected')
+        io.to(player.team).emit('user has left team', player)
+        users.removePlayer(player.id)
+      }
+    })
   })
+
+    //DELETE PLAYER FROM DB ON PLAY AGAIN
+    socket.on('delete player', socketId =>{ 
+      users.getTeamBySocketId(socketId).then(player => {
+        if(player == undefined){
+          console.log('user disconnected')
+        }
+        else{
+          console.log(player.name + ' disconnected')
+          io.to(player.team).emit('user has left team', player)
+          users.removePlayer(player.id)
+        }
+      })
+    })
 
   socket.on('join team', teamName =>{
     socket.join(teamName)
@@ -29,10 +54,6 @@ io.on('connection', function(socket){
     users.userInGame(teamData.teamName)
   })
 
-  socket.on('reset round count', teamName => {
-    io.to(teamName).emit('reset round count')
-  })
-
   socket.on('new question', teamData=>{
     io.to(teamData.teamName).emit('new question')
     questions.getQuestions(teamData.numOfPlayers)
@@ -41,13 +62,14 @@ io.on('connection', function(socket){
     })
   })
 
+  // HANDLE ROUNDS
+  socket.on('set total rounds', data=> {
+    io.to(data.teamName).emit('receive total rounds', data.totalRounds)
+  })
+
   // HANDLE ANSWER SUBMISSION
   socket.on('submitted answer', teamName=>{
     io.to(teamName).emit('submitted answer')
-  })
-
-  socket.on('reset answer count', teamName=>{
-    io.to(teamName).emit('reset answer count')
   })
 
   // HANDLE SCORE
@@ -55,8 +77,8 @@ io.on('connection', function(socket){
     io.to(response.teamName).emit('score', response.score)
   })
 
-  socket.on('reset score', teamName=>{
-    io.to(teamName).emit('reset score')
+  socket.on('check for strike', team=>{
+    io.to(team).emit('check for strike')
   })
 
   // HANDLE PAGE CHANGES
@@ -68,6 +90,19 @@ io.on('connection', function(socket){
     io.to(teamName).emit('increment pages')
   }) 
 
+  // LEADERBOARD
+  socket.on('add to leaderboard', teamData => {
+    leaderboard.addToLeaderboard(teamData).then(() => {
+      leaderboard.getLeaderboard(teamData.teamSize, teamData.totalRounds).then(leaders => {
+        io.to(teamData.teamCode).emit('receive leaderboard', leaders)
+      })
+    })
+  })
+
+  // RESET GAME
+  socket.on('reset game', teamName => {
+    io.to(teamName).emit('reset game')
+  })
 })
 
 http.listen(port, function () {

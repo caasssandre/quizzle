@@ -1,6 +1,6 @@
 .loading {
   height: 100%;
-  padding: 5vh 20vw;
+  padding: 5vh 10vw;
   align-items: center;
   text-align: center;
 
@@ -11,8 +11,21 @@
           border-bottom: 3px solid set-text-color($primary-color);
   }
 
+  &-text {
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 1rem;
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+
+  &-questionCount{
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+
   &-art {
-    padding-top: 30vh;
+    padding-top: 10vh;
   }
 }
 

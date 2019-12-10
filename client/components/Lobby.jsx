@@ -1,22 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
+import UIfx from 'uifx'
 
-class Lobby extends React.Component{
-  constructor(props){
+const joinfx = "/sfx/playerJoin.mp3"
+const join = new UIfx(joinfx);
+
+class Lobby extends React.Component {
+  constructor(props) {
     super(props)
-    this.state={
-      players:[]
+    this.state = {
+      players: []
     }
   }
 
-  componentDidMount(){
-    socket.on('show players in lobby', players=>{
+  componentDidMount() {
+    socket.on('show players in lobby', players => {
+      join.play();
+      
       this.setState({
         players: players
       })
     })
-    socket.on('all players in', ()=>{
+    socket.on('all players in', () => {
       this.props.dispatch({
         type: 'ADD_ALL_PLAYERS',
         players: this.state.players
@@ -26,32 +32,46 @@ class Lobby extends React.Component{
 
   handleClick = (e) => {
     e.preventDefault()
-    socket.emit('all players in', {teamName:this.props.teamName, numOfPlayers: this.state.players.length})    
+    socket.emit('set total rounds', {teamName: this.props.teamName, totalRounds: this.props.totalRounds})
+    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.state.players.length })
   }
 
-  render(){
+  render() {
     return (
       <main>
         <section className='lobby'>
           <h1 className='lobby-gameTitle'>Quizzical</h1>
-          <h2 className='lobby-title'>
-            Welcome {this.props.player.name} you are in team{' '}
-            {this.props.teamName}
-          </h2>
-          {this.props.player.captain && (
-            <div className='lobby-btn' onClick={this.handleClick}>
-              All players are in!
-            </div>
-          )}
+
+          {!this.props.player.captain &&
+            <>
+              <h2 className='lobby-title'>
+                Welcome {this.props.player.name}!
+              </h2>
+              <h2 className='lobby-instructions'>Your team code is: {' '}
+                {this.props.teamName}</h2>
+            </>}
+          {this.props.player.captain &&
+            <>
+              <h2 className='lobby-title'>
+                Welcome {this.props.player.name}!
+              </h2>
+              <h2 className='lobby-instructions'>Give this code to your team: {' '}
+                {this.props.teamName}</h2>
+            </>}
 
           <div className='lobby-users'>
             {this.state.players.length > 0 &&
               this.state.players.map(player => {
                 return (
-                  <h3 className='lobby-users__name' key={player.id}>{player.name} has joined the team!</h3>
+                  <h3 className='lobby-users__name' key={player.id}>{player.name} is in!</h3>
                 )
               })}
           </div>
+          {this.props.player.captain &&
+            <div className='lobby-btn' onClick={this.handleClick}>
+              All Players Are In!
+            </div>
+          }
 
         </section>
       </main>
@@ -59,11 +79,12 @@ class Lobby extends React.Component{
   }
 }
 
-function mapStateToProps(state){
-  return{
-    teamName : state.teamName,
-    player : state.player,
-    players: state.players
+function mapStateToProps(state) {
+  return {
+    teamName: state.teamName,
+    player: state.player,
+    players: state.players,
+    totalRounds: state.totalRounds
   }
 }
 

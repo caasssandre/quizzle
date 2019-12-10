@@ -1,9 +1,9 @@
 import request from 'superagent'
 
-export function addPlayerToTeam(user, team, captain){
+export function addPlayerToTeam(user, team, captain, socket){
   return request
     .post('/api/v1/users')
-    .send({user, team, captain})
+    .send({user, team, captain, socket})
     .then(res => res.body)
 }
 

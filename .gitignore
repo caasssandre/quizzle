@@ -64,4 +64,4 @@ typings/
 bundle.*
 
 # Development databases
-dev.sqlite3
+*.sqlite3

@@ -1,3 +1,10 @@
+body{
+  background-image: linear-gradient(45deg, rgba(224, 45, 14, 0.651), rgba(248, 173, 12, 0.63));
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+/* Chartist */
   .lds-grid {
     display: inline-block;
     position: relative;
@@ -80,6 +87,95 @@
     }
   }
 
-  /* .ct-chart{
-    fill: hsl(93, 52%, 49%);
-  } */
+
+  /* Leaderboard */
+  .Leaderboard {
+    padding: 40px 20px;
+    margin: auto;
+    max-width: 800px;
+  }
+
+  .leader-wrap {
+    display: flex;
+  }
+
+  .leader {
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    animation-name: revealLeaders;
+    animation-duration: .4s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+  }
+
+  .leader-ava {
+    padding: 8px;
+    margin-right: 16px;
+    position: relative;
+  }
+
+  .leader-score {
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+  }
+
+  .leader-score_title {
+    line-height: 1;
+  }
+
+  .leader-ava::after {
+    content: "";
+    left: 0;
+    bottom: 0;
+    display: block;
+    height: 6px;
+    position: absolute;
+    border: 0px transparent solid;
+    border-left-width: 20px;
+    border-right-width: 20px;
+    border-bottom-width: 6px;
+    border-bottom-color: #fff;
+    transition: border-bottom-color .2s ease-in-out;
+  }
+
+  .leader-bar {
+    margin-top: 8px;
+    animation-name: barLoad;
+    animation-duration: .4s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.6, 0.2, 0.1, 1);
+    transform-origin: left;
+  }
+
+  .bar {
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  @keyframes revealLeaders {
+    from {
+      transform: translateX(-200px);
+      opacity: 0;
+    }
+
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  @keyframes barLoad {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1)
+    }
+  }
+input[type='text'],
+input[type='number'],
+input {
+font-size: 16px;
+}

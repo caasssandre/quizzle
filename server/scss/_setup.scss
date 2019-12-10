@@ -1,6 +1,9 @@
 .setup {
   height: 100%;
-  padding: 5vh 20vw;
+  padding-top: 3vh;
+  padding-bottom: 1vh;
+  padding-left: 5vh;
+  padding-right: 5vh;
   align-items: center;
   text-align: center;
 
@@ -11,28 +14,56 @@
         border-bottom: 3px solid set-text-color($primary-color);
     }
 
+    &-welcomeCaptain {
+      margin-top: 3rem;
+    }
+
     &-create {
-      font-size: 2rem;
-      padding-bottom: 1rem;
+      font-size: 1.5rem;
+      padding-bottom: 2rem;
+    }
+
+    &-form {
+      padding: .3rem;
+    }
+
+    &-join {
+      // position: absolute;
+      // bottom: 3vh;
+      // left: 50%;
+      // margin-left: -100px;
+      margin-top: 2rem;
     }
 
     &-team {
       font-weight: 700;
       position: relative;
       text-align: left;
+      padding: .3rem;
+
+        &__text {
+          padding-bottom: .5rem;
+        }
 
         &__fields {
           width: 100%;
-        }
+          height: 2rem;
+      }
     }
 
     &-user {
       font-weight: 700;
       text-align: left;
+      padding: .3rem;
       
-      
+      &__text {
+        padding-bottom: .5rem;
+      }
+
         &__fields {
         width: 100%;
+        height: 2rem;
+        margin-bottom: 1rem;
       }
     }
 
@@ -49,9 +80,23 @@
           text-decoration: none;
           padding: 8px 10px;
           border-radius: 7px;
-          border: solid 2px rgb(142, 150, 153) ;
+          border: solid 2px rgb(39, 8, 110) ;
         }
 
     }
 
+    &-errorMessage {
+      margin-top: 2rem;
+      line-height: 1.5;
+    }
+
+}
+
+@media (min-height: 500px) {
+  .setup-join {
+    position: absolute;
+    bottom: 3vh;
+    left: 50%;
+    margin-left: -100px;
+  }
 }

@@ -1,14 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import {savePlayerDetails, incrementPage, saveTeamName} from '../actions'
 import { addPlayerToTeam, getTeams, getPlayersByTeam } from '../api/users'
 import socket from '../api/socket'
 
-class Join extends React.Component {
+ export class Join extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      player:'',
+      team:'',
+      buttonClicked:false
     }
+    this.joinTeam = this.joinTeam.bind(this)
   }
 
   handleChange = (event) => {
@@ -22,76 +27,67 @@ class Join extends React.Component {
     return String.fromCharCode(65 + r);
   }
 
-  // generateCode = (e) => {
-  //   e.preventDefault()
-  //   let prefix = new Array(2).fill().map(() => this.getRandomUppercaseChar()).join(""),
-  //     integer = Math.floor((Math.random() * 999) * 7);
-  //   let newCode = prefix + integer
-  //   this.setState({
-  //     code: newCode
-  //   })
 
-  //   return prefix + integer;
-  // }
-
-
-  joinTeam = (event) => {
-    event.preventDefault()
-    getTeams().then(res => {
-      
-      this.setState({
-        message: ''
+  joinTeam = () => {
+    if(this.state.buttonClicked == true){
+      // do nothing
+    }
+    else{
+      getTeams().then(res => {
+        if(this.state.team == ''){
+          this.setState({
+            teamMessage:'Please enter a team code',
+          })
+        }
+        else if(this.state.player == ''){
+          this.setState({
+            userMessage:'Please enter a username'
+          })
+        }
+        else if (!res.text.includes(this.state.team)) {
+          this.setState({
+            teamMessage: 'This team does not exist',
+            team: ''
+          })
+        }
+        else {
+          getPlayersByTeam(this.state.team).then(res => {
+            if(JSON.parse(res.text)[0].game_started){
+              this.setState({
+                teamMessage: 'This team has started playing without you!',
+                team: ''
+              })
+            }
+            else if (!JSON.parse(res.text).find(player => {
+              return player.name == this.state.player
+            })) {
+              this.addPlayerToTeam(false)
+              this.setState({
+                buttonClicked: true
+              })
+            }
+            else {
+              this.setState({
+                userMessage: 'This username is taken',
+                player: ''
+              })
+            }
+          })
+        }
       })
-      if (!res.text.includes(this.state.team)) {
-        this.setState({
-          message: 'This team does not exist, maybe you would like to create one?'
-        })
-      }
-      else {
-        getPlayersByTeam(this.state.team).then(res => {
-          console.log(JSON.parse(res.text)[0].game_started)
-          if(JSON.parse(res.text)[0].game_started){
-            this.setState({
-              message: 'This team has started playing without you!'
-            })
-          }
-          else if (!JSON.parse(res.text).find(player => {
-            return player.name == this.state.player
-          })) {
-            this.addPlayerToTeam(false)
-          }
-          else {
-            this.setState({
-              message: 'This username is taken - please pick a new one.'
-            })
-          }
-        })
-      }
-    })
+    }
   }
 
   addPlayerToTeam = (captain) => {
     socket.emit('join team', this.state.team)
-    addPlayerToTeam(this.state.player, this.state.team, captain)
+    addPlayerToTeam(this.state.player, this.state.team, captain, this.props.player.socketId)
       .then(players => {
         socket.emit('show players in lobby', players)
-        this.props.dispatch({
-          type: 'SAVE_PLAYER_DETAILS',
-          playerInfo: {
-            name: this.state.player,
-            captain: captain,
-            index: players.length - 1
-          }
-        })
+        this.props.dispatch(savePlayerDetails(this.state.player, captain, players.length-1)
+        )
       })
-
-    this.props.dispatch({
-      type: 'SAVE_TEAM_NAME',
-      teamName: this.state.team
-    })
-    this.props.dispatch({
-      type: 'INCREMENT_PAGE',
-    })
+    this.props.dispatch(saveTeamName(this.state.team))
+    this.props.dispatch(incrementPage())
   }
 
   render() {
@@ -101,34 +97,56 @@ class Join extends React.Component {
           <h1 className='setup-gameTitle'>Quizzical</h1>
           <form>
             <section className='setup-team'>
-              Team Name:
+              <p className='setup-team__text'>Team Code:</p>
               <input
+                id='team-text'
                 className='setup-team__fields'
                 type='text'
                 name='team'
+                placeholder={this.state.teamMessage}
                 onChange={this.handleChange}
                 value={this.state.team}
               />
             </section>
             <section className='setup-user'>
-              User Name:
+              <p className='setup-user__text'>User Name:</p>
               <input
+                id='user-text'
                 className='setup-user__fields'
                 type='text'
                 name='player'
+                placeholder={this.state.userMessage}
                 onChange={this.handleChange}
                 value={this.state.player}
               />
             </section>
             <section>
-              <div className='setup-btns__btn' onClick={this.joinTeam}>
+              <div className='setup-btns__btn' id="join-btn" onClick={this.joinTeam}>
                 Join Team
-                </div>
+              </div>
             </section>
-            <div className='setup-btns__btn' onClick={(e) => this.props.changePage(e, 'create')}>
+            <section className='setup-join'>
+              <p>Not quite what you want?</p>
+              <div
+                className='setup-btns__btn'
+                id='create-btn'
+                onClick={e => this.props.changePage(e, 'create')}
+              >
                 Create Team
-                </div>
-            {this.state.message != '' && <h2>{this.state.message}</h2>}
+              </div>
+              <div
+                className='setup-btns__btn'
+                onClick={e => this.props.changePage(e, 'instructions')}
+              >
+                Rules
+              </div>
+              <div
+                className='setup-btns__btn'
+                onClick={e => this.props.changePage(e, 'main')}
+              >
+                Main Menu
+              </div>
+            </section>
           </form>
         </section>
       </main>
@@ -136,4 +154,10 @@ class Join extends React.Component {
   }
 }
 
-export default connect()(Join)
+function mapStateToProps(state){
+  return{
+    player: state.player
+  }
+}
+
+export default connect(mapStateToProps)(Join)

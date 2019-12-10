@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux'
 
-// import otherReducer from './other-reducer'
 import pageNumber from './pageNumber'
 import playerResponses from './playerResponses'
 import teamName from './teamName'
@@ -12,6 +11,8 @@ import score from './score'
 import clock from './clock'
 import roundCount from './roundCount'
 import totalRounds from './totalRounds'
+import leaderboard from './leaderboard'
+import strikeCount from './strikeCount'
 
 export default combineReducers({
     pageNumber,
@@ -24,5 +25,7 @@ export default combineReducers({
     score,
     clock, 
     roundCount,
-    totalRounds
+    totalRounds,
+    leaderboard,
+    strikeCount
 })

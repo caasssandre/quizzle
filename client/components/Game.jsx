@@ -4,6 +4,13 @@ import socket from '../api/socket'
 
 import QuestionSplash from './QuestionSplash'
 
+import UIfx from 'uifx'
+
+
+const countdownFile = "/sfx/countdown.mp3"
+const countdownFx = new UIfx(countdownFile);
+
+
 class Game extends React.Component {
   constructor(props) {
     super(props)
@@ -15,7 +22,7 @@ class Game extends React.Component {
       clock: 10,
       finishedRound: false
     }
-    this.interval
+    // this.interval
   }
 
   componentDidMount() {
@@ -46,7 +53,6 @@ class Game extends React.Component {
   }
 
   finishRound = () => {
-    socket.emit('reset answer count', this.props.teamName)
     socket.emit('increment pages', this.props.teamName)
   }
 
@@ -79,8 +85,25 @@ class Game extends React.Component {
     socket.emit('submitted answer', this.props.teamName)
   }
 
+  // animateTimer = () => {
+  //   console.log(this.timer)
+  //   if(document.getElementsByClassName('filler')[0]){
+  //     document.getElementsByClassName('filler')[0].style.WebkitAnimationDuration =
+  //     (this.props.players.length * 20)+'s'
+  //     document.getElementsByClassName('filler')[0].style.animationDuration =
+  //     (this.props.players.length * 20)+ 's'
+  //   }
+  // }
+  
+
   render() {
+    // if(this.props.clock - (this.props.players.length *20) == 0){
+    //   this.animateTimer()
+
+    // }
+
     if (this.props.clock == 0 && this.props.player.captain && this.state.finishedRound == false) {
+ 
       this.finishRound()
       this.setState({
         finishedRound: true
@@ -88,16 +111,34 @@ class Game extends React.Component {
     }
     let q = this.props.questions
 
-    if (!q.trivias) {
-      return < QuestionSplash />
+    if (this.props.clock === 5){
+      countdownFx.play()
     }
-    else {
 
-    return (
+    return !q.trivias ? (
+      <QuestionSplash />
+    ) : this.props.clock > this.props.players.length * 20 ? (
+      <QuestionSplash />
+    ) : (
       <div className='questions'>
-        <h1 className="questions-gameTitle">Quizzical</h1>
-        {q.trivias && <h2 className='questions-title'>{q.trivias[this.props.player.index].question}</h2>}
-        <p className='questions-clock'>{this.props.clock}</p>
+        <h1 className='questions-gameTitle'>Quizzical</h1>
+        {/* <p className='questions-clock'>{this.props.clock}</p> */}
+        <div className='progress-bar'>
+          <div
+            ref={this.timer}
+            style={{
+              width: `${(this.props.clock * 100) /
+                (this.props.players.length * 20)}%`,
+                animationDuration: (this.props.players.length *20 + 's')
+            }}
+            className='filler'
+          ></div>
+        </div>
+        {q.trivias && (
+          <h2 className='questions-title'>
+            {q.trivias[this.props.player.index].question}
+          </h2>
+        )}
         {!this.state.submittedAnswer && q.jumbledTrivias && (
           <div className='questions-btns'>
             <div
@@ -140,12 +181,12 @@ class Game extends React.Component {
         )}
 
         {this.state.submittedAnswer && (
-          <div className='questions-btns__btn'>
+          <div className='questions-btns__answered'>
             <div>{this.props.playerResponses[0].selectedAnswer}</div>
           </div>
         )}
       </div>
-    )}
+    )
   }
 }
 

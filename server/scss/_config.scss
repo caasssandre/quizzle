@@ -1,5 +1,6 @@
-$primary-color: #f0923b;
-$secondary-color: #d3f3eb;
+$primary-color: white;
+// $secondary-color: #91e4e7;
+$secondary-color: #4ad9de;
 
 * {
   box-sizing: border-box;
@@ -14,8 +15,8 @@ h1, h2 {
 
 @function set-text-color($color) {
   @if (lightness($color) > 40%) {
-    @return #000;
+    @return rgb(28, 8, 77);
   } @else {
-    @return #fff;
+    @return rgb(162, 133, 233);
   }
 }

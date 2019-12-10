@@ -34,27 +34,23 @@ function processApiQuestions(apiResponse) {
 
 
 function jumbleQuestions(trivias) {
-  // const trivias = processApiQuestions(res.body.results)
   let length = trivias.length
   let lastItem
   let i
 
-  // While there remain elements to shuffle…
-  while (length) {
-    // Pick a remaining element…
-    i = Math.floor(Math.random() * length--)
-
-    // And swap it with the current element.
+  // While there remain elements to shuffle
+  while (length>1) {
+    // Pick a remaining element, excluding the last element
+    i = Math.floor(Math.random() * (length-- -1))
+    // And swap it with the last element.
     lastItem = trivias[length]
     trivias[length] = trivias[i]
     trivias[i] = lastItem
   }
-  // console.log(trivias);
   let jumbledTrivias = trivias
   return jumbledTrivias
 }
 
 module.exports = {
-  // router,
   getQuestions
 }
