@@ -12,7 +12,6 @@ class ResultSplash extends React.Component {
     return (
       <main>
         <div className='loading'>
-          {/* <h1 className='loading-gameTitle'>Quizzical</h1> */}
           <div className='home-logo'>
             <img
               className='home-logo__pic2'
@@ -21,19 +20,6 @@ class ResultSplash extends React.Component {
               alt='logo'
             />
           </div>
-          {/* <div className='loading-art'>
-            <div className='lds-grid'>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div> */}
         </div>
         <h1 className='loading-text'>Checking Results...</h1>
       </main>

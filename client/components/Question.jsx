@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
 
-class Question extends React.Component{
-  constructor(props){
+class Question extends React.Component {
+  constructor(props) {
     super(props)
-    this.state={
+    this.state = {
       display1: '',
       display2: '',
       display3: '',
@@ -16,26 +16,26 @@ class Question extends React.Component{
 
   componentDidMount() {
     const answerArr = ['correctAnswer', 'incorrectAnswer1', 'incorrectAnswer2', 'incorrectAnswer3']
-    function randomAnswer(answerArr) {
-      let length = answerArr.length
-      let lastItem
-      let i
-      while (length) {
-        i = Math.floor(Math.random() * length--)
-        lastItem = answerArr[length]
-        answerArr[length] = answerArr[i]
-        answerArr[i] = lastItem
-      }
-      let randomArr = answerArr
-      return randomArr
-    }
-    let randomArr = randomAnswer(answerArr)
+    let randomArr = this.randomAnswer(answerArr)
     this.setState({
       display1: randomArr[0],
       display2: randomArr[1],
       display3: randomArr[2],
       display4: randomArr[3]
     })
+  }
+
+  randomAnswer = (answerArr) => {
+    let length = answerArr.length
+    let lastItem
+    let i
+    while (length) {
+      i = Math.floor(Math.random() * length--)
+      lastItem = answerArr[length]
+      answerArr[length] = answerArr[i]
+      answerArr[i] = lastItem
+    }
+    return answerArr
   }
 
   handleClick = event => {
@@ -66,72 +66,50 @@ class Question extends React.Component{
     socket.emit('submitted answer', this.props.teamName)
   }
 
-  render(){
-    if(this.props.questions.trivias){
-
-      let trivia = this.props.questions.trivias[this.props.player.index]
-      let jumbledTrivia = this.props.questions.jumbledTrivias[this.props.player.index]
-      return(
-        <>
-        {/* {q.trivias && ( */}
-          <h2 className='questions-title'>
-          {trivia.question}
-        </h2>
-      {/* )} */}
-      {!this.state.submittedAnswer && (
-      // {!this.state.submittedAnswer && q.jumbledTrivias && (
-        <div className='questions-btns'>
-          <div
-            className='questions-btns__btn'
-            id={
-              jumbledTrivia[this.state.display1]
-            }
-            onClick={this.handleClick}
-          >
-            {jumbledTrivia[this.state.display1]}
+  render() {
+    let trivia = this.props.questions.trivias[this.props.player.index]
+    let jumbledTrivia = this.props.questions.jumbledTrivias[this.props.player.index]
+    return (
+      <>
+        <h2 className='questions-title'> {trivia.question}</h2>
+        {!this.state.submittedAnswer &&
+          <div className='questions-btns'>
+            <div
+              className='questions-btns__btn' id={jumbledTrivia[this.state.display1]}
+              onClick={this.handleClick}
+              >{jumbledTrivia[this.state.display1]}
+            </div>
+            <div
+              className='questions-btns__btn'
+              id={jumbledTrivia[this.state.display2]}
+              onClick={this.handleClick}
+              >{jumbledTrivia[this.state.display2]}
+            </div>
+            <div
+              className='questions-btns__btn'
+              id={jumbledTrivia[this.state.display3]}
+              onClick={this.handleClick}
+              >{jumbledTrivia[this.state.display3]}
+            </div>
+            <div
+              className='questions-btns__btn'
+              id={jumbledTrivia[this.state.display4]}
+              onClick={this.handleClick}
+              >{jumbledTrivia[this.state.display4]}
+            </div>
+          </div>}
+        {this.state.submittedAnswer &&
+          <div className='questions-btns__answered'>
+            <div>{this.props.playerResponses[0].selectedAnswer}</div>
           </div>
-          <div
-            className='questions-btns__btn'
-            id={
-              jumbledTrivia[this.state.display2]
-            }
-            onClick={this.handleClick}
-          >
-            {jumbledTrivia[this.state.display2]}
-          </div>
-          <div
-            className='questions-btns__btn'
-            id={
-              jumbledTrivia[this.state.display3]
-            }
-            onClick={this.handleClick}
-          >
-            {jumbledTrivia[this.state.display3]}
-          </div>
-          <div
-            className='questions-btns__btn'
-            id={
-              jumbledTrivia[this.state.display4]
-            }
-            onClick={this.handleClick}
-          >
-            {jumbledTrivia[this.state.display4]}
-          </div>
-        </div>
-      )}
-      {this.state.submittedAnswer && (
-        <div className='questions-btns__answered'>
-          <div>{this.props.playerResponses[0].selectedAnswer}</div>
-        </div>
-      )}
+        }
       </>
-      )
-    }
+    )
   }
 }
 
-function mapStateToProps(state){
-  return{
+function mapStateToProps(state) {
+  return {
     playerResponses: state.playerResponses,
     players: state.players,
     teamName: state.teamName,
