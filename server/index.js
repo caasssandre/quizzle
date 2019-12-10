@@ -92,8 +92,31 @@ io.on('connection', function(socket){
 
   //DELETE PLAYER FROM DB ON PLAY AGAIN
   socket.on('delete player', socketId =>{
-    users.removePlayerBysocketId(socketId)
+    // users.removePlayerBysocketId(socketId)
+
+    users.getTeamBySocketId(socketId).then(player => {
+      if(player == undefined){
+        console.log('user disconnected')
+      }
+      else{
+        console.log(player.name + ' disconnected')
+        io.to(player.team).emit('user has left team', player)
+        users.removePlayer(player.id)
+      }
+    })
   })
+
+  // users.getTeamBySocketId(socket.id).then(player => {
+  //   if(player == undefined){
+  //     console.log('user disconnected')
+  //   }
+  //   else{
+  //     console.log(player.name + ' disconnected')
+  //     io.to(player.team).emit('user has left team', player)
+  //     users.removePlayer(player.id)
+  //   }
+  // })
+
 })
 
 http.listen(port, function () {

@@ -58,7 +58,7 @@ export class App extends React.Component {
     // Stops game when another player leaves the team
     socket.on('user has left team', player=>{
       this.props.dispatch(goToStopGame())
-      this.props.dispatch(clearPlayers())
+      // this.props.dispatch(clearPlayers())
       this.setState({
         missingPlayers:[...this.state.missingPlayers, player.name]
       })
