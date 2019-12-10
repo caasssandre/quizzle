@@ -41,7 +41,7 @@ class StopGame extends React.Component {
 
 function mapStateToProps(state){
   return{
-    socketId: state.players[0].socket_id
+    socketId: state.player.socketId
   }
 }
 
