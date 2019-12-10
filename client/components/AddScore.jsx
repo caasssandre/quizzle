@@ -38,6 +38,11 @@ class AddScore extends React.Component {
 
     playAgain = () => {
         socket.emit('reset game', this.props.teamName)
+        if (this.props.missingPlayers.length != 0) {
+            this.props.dispatch(removeMissingPlayers(this.props.missingPlayers))
+            this.props.dispatch(addPlayers(this.props.players))
+            this.props.dispatch(resetMissingPlayers())
+          }
         socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
     }
 
@@ -49,7 +54,6 @@ class AddScore extends React.Component {
     render() {
         return (
             <div className="leaderboard">
-                {/* <h1 className="leaderboard-gameTitle">Quizzical</h1> */}
                 <h1 className="leaderboard-title">Add Score to Leaderboard</h1>
 
                 <p className="leaderboard-team">Team name:</p>
@@ -74,7 +78,8 @@ function mapStateToProps(state) {
         players: state.players,
         teamName: state.teamName,
         score: state.score,
-        totalRounds: state.totalRounds
+        totalRounds: state.totalRounds,
+        missingPlayers: state.missingPlayers
     }
 }
 
