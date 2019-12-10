@@ -3,11 +3,9 @@ import { connect } from 'react-redux'
 import Instructions from './Instructions'
 import Create from './Create'
 import Join from './Join'
-import UIfx from 'uifx'
-
 
 const buttonfx = "/sfx/buttonClick.mp3"
-const buttonClick = new UIfx(buttonfx);
+const buttonClick = new Audio(buttonfx)
 
 export class Welcome extends React.Component {
   constructor(props) {

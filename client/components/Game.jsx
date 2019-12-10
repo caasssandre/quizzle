@@ -8,7 +8,7 @@ import UIfx from 'uifx'
 
 
 const countdownFile = "/sfx/countdown.mp3"
-const countdownFx = new UIfx(countdownFile);
+const countdownFx = new Audio(countdownFile);
 
 
 class Game extends React.Component {

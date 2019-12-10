@@ -7,7 +7,7 @@ import UIfx from 'uifx'
 
 
 const gameEndFile = "/sfx/win.mp3"
-const gameEndFx = new UIfx(gameEndFile);
+const gameEndFx = new Audio(gameEndFile);
 
 class GameEnd extends React.Component {
   constructor(props) {

@@ -9,8 +9,8 @@ import UIfx from 'uifx'
 
 const correctfx = "/sfx/correct.mp3"
 const incorrectfx = "/sfx/incorrect.mp3"
-const correct = new UIfx(correctfx);
-const incorrect = new UIfx(incorrectfx)
+const correct = new Audio(correctfx);
+const incorrect = new Audio(incorrectfx)
 
 class Results extends React.Component {
   constructor(props) {

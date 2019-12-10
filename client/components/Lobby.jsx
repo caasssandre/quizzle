@@ -4,7 +4,7 @@ import socket from '../api/socket'
 import UIfx from 'uifx'
 
 const joinfx = "/sfx/playerJoin.mp3"
-const join = new UIfx(joinfx);
+const join = new Audio(joinfx);
 
 class Lobby extends React.Component {
   constructor(props) {
