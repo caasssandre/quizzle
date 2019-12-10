@@ -188,3 +188,17 @@ export function resetLeaderboard() {
     }
 }
 
+// Missing Players
+export function addToMissingPlayers(player) {
+    console.log(player)
+    return {
+        type: 'ADD_MISSING_PLAYER',
+        player
+    }
+}
+
+export function resetMissingPlayers(){
+    return {
+        type: 'RESET_MISSING_PLAYERS'
+    }
+}

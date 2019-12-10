@@ -23,6 +23,7 @@ import { incrementScore, resetScore, saveStrike, resetStrike, saveStreak } from 
 import { incrementRound, resetRound, setTotalRounds} from '../actions/index'
 import { addLeaderboard, resetLeaderboard} from '../actions/index' 
 import { addPlayers, removeMissingPlayers} from '../actions/index'
+import {addToMissingPlayers, resetMissingPlayers} from '../actions/index'
 
 const cooldownfx = "/sfx/cooldown2.mp3"
 const cooldown = new UIfx(cooldownfx);
@@ -31,7 +32,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      missingPlayers:[],
+      // missingPlayers:[],
       roundScores: [] 
     }     
   }
@@ -56,11 +57,14 @@ export class App extends React.Component {
 
     // Stops game when another player leaves the team
     socket.on('user has left team', player=>{
-      this.setState({
-        missingPlayers:[...this.state.missingPlayers, player.name]
-      })
+      // this.setState({
+      //   missingPlayers:[...this.state.missingPlayers, player.name]
+      // })
+      console.log(player.name)
+      this.props.dispatch(addToMissingPlayers(player.name))
+
       if (this.props.pageNumber <= 4){
-        if(!this.state.missingPlayers.includes(this.props.player.name)){
+        if(!this.props.missingPlayers.includes(this.props.player.name)){
           this.props.dispatch(goToStopGame())
         }
       }
@@ -89,12 +93,13 @@ export class App extends React.Component {
 
     // When back-end receives 'all players in', it makes the api call to get new questions
     socket.on('all players in', (players) => { 
-      if (this.state.missingPlayers.length != 0){ 
-        this.props.dispatch(removeMissingPlayers(this.state.missingPlayers))
+      if (this.props.missingPlayers.length != 0){ 
+        this.props.dispatch(removeMissingPlayers(this.props.missingPlayers))
         this.props.dispatch(addPlayers(this.props.players))
-        this.setState({
-          missingPlayers: []
-        })
+        this.props.dispatch(resetMissingPlayers())
+        // this.setState({
+        //   missingPlayers: []
+        // })
       }
       else {
         this.props.dispatch(addPlayers(players))
@@ -181,7 +186,8 @@ export class App extends React.Component {
         {this.props.pageNumber == 4 && <Results strike={!this.state.roundScores.includes(0)} />}
         {this.props.pageNumber == 5 && <GameEnd />}
         {this.props.pageNumber == 6 && <Leaderboard />}
-        {this.props.pageNumber == 7 && <StopGame players={this.state.missingPlayers} />}
+        {/* {this.props.pageNumber == 7 && <StopGame players={this.state.missingPlayers} />} */}
+        {this.props.pageNumber == 7 && <StopGame />}
       </Router>
     )
   }
@@ -193,7 +199,8 @@ function mapStateToProps(state) {
     clock: state.clock,
     players: state.players,
     strikeCount: state.strikeCount,
-    player: state.player
+    player: state.player,
+    missingPlayers: state.missingPlayers
   }
 }
 
