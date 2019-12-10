@@ -69,7 +69,7 @@ class Lobby extends React.Component {
           </div>
           {this.props.player.captain &&
             <div className='lobby-btn' onClick={this.handleClick}>
-              All players are in!
+              All Players Are In!
             </div>
           }
 

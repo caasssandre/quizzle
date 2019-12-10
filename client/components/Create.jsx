@@ -117,7 +117,7 @@ export class Create extends React.Component {
                 Rules
                 </div>
               <div className='home-btns__btn' id="mmBtn" onClick={(e) => this.props.changePage(e, 'main')}>
-                Main menu
+                Main Menu
                 </div>
             </section>
           </form>

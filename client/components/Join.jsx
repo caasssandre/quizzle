@@ -144,12 +144,9 @@ import socket from '../api/socket'
                 className='setup-btns__btn'
                 onClick={e => this.props.changePage(e, 'main')}
               >
-                Main menu
+                Main Menu
               </div>
             </section>
-            {/* {this.state.message != '' && (
-              <h2 className='setup-errorMessage'>{this.state.message}</h2>
-            )} */}
           </form>
         </section>
       </main>
