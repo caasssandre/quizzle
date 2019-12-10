@@ -40,12 +40,12 @@ import socket from '../api/socket'
         })
         if(this.state.team == ''){
           this.setState({
-            message:'Please enter a valid team code'
+            teamMessage:'Please enter a valid team code'
           })
         }
         else if(this.state.player == ''){
           this.setState({
-            message:'Please enter a username'
+            userMessage:'Please enter a username'
           })
         }
         else if (!res.text.includes(this.state.team)) {
@@ -104,6 +104,7 @@ import socket from '../api/socket'
                 className='setup-team__fields'
                 type='text'
                 name='team'
+                placeholder={this.state.teamMessage}
                 onChange={this.handleChange}
                 value={this.state.team}
               />
@@ -115,6 +116,7 @@ import socket from '../api/socket'
                 className='setup-user__fields'
                 type='text'
                 name='player'
+                placeholder={this.state.userMessage}
                 onChange={this.handleChange}
                 value={this.state.player}
               />
@@ -146,9 +148,9 @@ import socket from '../api/socket'
                 Main menu
               </div>
             </section>
-            {this.state.message != '' && (
+            {/* {this.state.message != '' && (
               <h2 className='setup-errorMessage'>{this.state.message}</h2>
-            )}
+            )} */}
           </form>
         </section>
       </main>

@@ -84,10 +84,8 @@ export class Create extends React.Component {
     this.props.dispatch(incrementPage())
   }
 
-
   render() {
     return (
-
       <main>
         <section className='setup'>
           <h1 className='setup-gameTitle'>Quizzical</h1>
@@ -96,7 +94,7 @@ export class Create extends React.Component {
 
         <section className='setup'>
           <p className='setup-form'>Enter your name below:</p>
-          <input className='setup-user__fields' id="capNameInput" name="captainName" onChange={this.handleChange} value={this.state.captainName} />
+          <input className='setup-user__fields' id="capNameInput" type="text" name="captainName" placeholder={this.state.message} onChange={this.handleChange} value={this.state.captainName} />
           <p className='setup-form'>Select your game length:</p>
           <select className='setup-user__fields' name="gameLength" onChange={this.handleLengthChange}>
             <option value="2">Short</option>
@@ -122,7 +120,6 @@ export class Create extends React.Component {
                 Main menu
                 </div>
             </section>
-            {this.state.message != '' && <h2 className='setup-errorMessage'>{this.state.message}</h2>}
           </form>
         </section>
       </main>
