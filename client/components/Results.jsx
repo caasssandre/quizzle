@@ -59,7 +59,6 @@ class Results extends React.Component {
       buttonClick.play()
     }
     if (this.state.buttonClicked == true) {
-
       // do nothing
     }
     else {

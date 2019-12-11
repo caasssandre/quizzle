@@ -61,3 +61,16 @@
     height: 35vh
   }
 }
+.gameTitle-box {
+  height: 100%;
+  padding: 2.5vh 10vw 0;
+  align-items: center;
+  text-align: center;
+}
+
+.gameTitle-title {
+  font-size: 1.8rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid set-text-color($primary-color);
+}

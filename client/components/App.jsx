@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { HashRouter as Router } from 'react-router-dom'
-import UIfx from 'uifx'
 
 import socket from '../api/socket'
 
@@ -164,8 +163,8 @@ export class App extends React.Component {
     return (
       <Router>
         {this.props.pageNumber != 1 &&
-        <div className="questions">
-          <h1 className='questions-gameTitle'>Quizzical</h1>
+        <div className="gameTitle-box">
+          <h1 className='gameTitle-title'>Quizzical</h1>
         </div>
         }
         {this.props.pageNumber == 1 && <Welcome />}
