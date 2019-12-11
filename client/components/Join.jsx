@@ -13,6 +13,7 @@ import socket from '../api/socket'
       team:'',
       buttonClicked:false
     }
+    this.joinTeam = this.joinTeam.bind(this)
   }
 
   handleChange = (event) => {
