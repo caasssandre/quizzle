@@ -13,7 +13,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => deletePlayer(socket.id))
 
   // HANDLE PAGE CHANGES
-  socket.on('main menu', teamName => io.to(teamName).emit('main menu'))
+  socket.on('main menu', teamName => {
+    io.to(teamName).emit('main menu')
+    socket.leave(teamName)
+  })
 
   socket.on('increment pages', teamName => io.to(teamName).emit('increment pages'))
 

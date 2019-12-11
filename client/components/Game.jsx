@@ -41,7 +41,7 @@ class Game extends React.Component {
     let q = this.props.questions
     return(
       !q.trivias ? <QuestionSplash/> :
-      this.props.clock > this.props.players.length * 20 ? <QuestionSplash/> :
+      this.props.clock > this.props.players.length * 15 ? <QuestionSplash/> :
         <div className='questions'>
           <ProgressBar/>
           <Question finishRound={this.finishRound}/>

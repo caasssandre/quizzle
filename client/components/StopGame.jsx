@@ -35,7 +35,7 @@ class StopGame extends React.Component {
           })}
         <section>
           <div className='lobby-btn' onClick={this.reStartGame}>
-            Go back to main screen
+            Main Menu
                 </div>
         </section>
       </div>

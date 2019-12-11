@@ -12,8 +12,8 @@ class ProgressBar extends React.Component {
         ref={this.timer}
         style={{
           width: `${(this.props.clock * 100) /
-            (this.props.players.length * 20)}%`,
-          animationDuration: (this.props.players.length * 20 + 's')
+            (this.props.players.length * 15)}%`,
+          animationDuration: (this.props.players.length * 15 + 's')
         }}
         className='filler'
       ></div>

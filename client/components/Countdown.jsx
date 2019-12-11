@@ -9,7 +9,7 @@ class Countdown extends React.Component {
   render(){
     return (
       <div className='questions-countdown__circle'>
-        <h1 className='questions-countdown'>{this.props.clock - this.props.players.length * 20}</h1>
+        <h1 className='questions-countdown'>{this.props.clock - this.props.players.length * 15}</h1>
       </div>
     )
   }
