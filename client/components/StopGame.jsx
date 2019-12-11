@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { goToMainMenu, resetQuestions, clearPlayers, resetLeaderboard, resetAnswerCount, resetScore, resetRound, resetMissingPlayers} from '../actions'
+import { resetTeamName, goToMainMenu, resetQuestions, clearPlayers, resetLeaderboard, resetAnswerCount, resetScore, resetRound, resetMissingPlayers} from '../actions'
 import socket from '../api/socket'
 
 class StopGame extends React.Component {
@@ -9,7 +9,8 @@ class StopGame extends React.Component {
   }
 
   reStartGame = () => {
-    socket.emit('delete player', this.props.socketId)    
+    socket.emit('delete player', {socketId: this.props.socketId, team: this.props.teamName})    
+    this.props.dispatch(resetTeamName())
     this.props.dispatch(resetQuestions())
     this.props.dispatch(resetLeaderboard())
     this.props.dispatch(resetAnswerCount())
@@ -44,7 +45,8 @@ class StopGame extends React.Component {
 function mapStateToProps(state){
   return{
     socketId: state.player.socketId,
-    missingPlayers: state.missingPlayers
+    missingPlayers: state.missingPlayers,
+    teamName: state.teamName
   }
 }
 

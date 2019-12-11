@@ -24,7 +24,10 @@ io.on('connection', (socket) => {
     io.to(players[0].team).emit('show players in lobby', players)
   })
 
-  socket.on('delete player', socketId => deletePlayer(socketId))
+  socket.on('delete player', data => {
+    socket.leave(data.team)
+    deletePlayer(data.socketId)
+  })
 
   // API CALL TO GET QUESTIONS
   socket.on('all players in', teamData => {
@@ -68,12 +71,15 @@ io.on('connection', (socket) => {
 
 function deletePlayer(socketId) {
   users.getTeamBySocketId(socketId).then(player => {
+    
     if (player == undefined) {
       console.log('user disconnected')
     } else {
       console.log(player.name + ' disconnected')
-      io.to(player.team).emit('user has left team', player)
-      users.removePlayer(player.id)
+      users.removePlayer(player.id).then(() => {
+        io.to(player.team).emit('user has left team', player)
+      })
+      
     }
   })
 }

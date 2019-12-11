@@ -201,3 +201,10 @@ export function resetMissingPlayers(){
         type: 'RESET_MISSING_PLAYERS'
     }
 }
+
+// Team name
+export function resetTeamName() {
+    return {
+        type: 'RESET_TEAM_NAME'
+    }
+}
