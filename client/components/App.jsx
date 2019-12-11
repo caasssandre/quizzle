@@ -164,9 +164,9 @@ export class App extends React.Component {
     return (
       <Router>
         {this.props.pageNumber != 1 &&
-          <div className="questions">
-            <h1 className='questions-gameTitle'>Quizzical</h1>
-          </div>
+        <div className="questions">
+          <h1 className='questions-gameTitle'>Quizzical</h1>
+        </div>
         }
         {this.props.pageNumber == 1 && <Welcome />}
         {this.props.pageNumber == 2 && <Lobby />}

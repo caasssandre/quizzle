@@ -18,7 +18,6 @@ class ProgressBar extends React.Component {
         className='filler'
       ></div>
     </div>
-
     )
   }
 }
