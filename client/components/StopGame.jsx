@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { goToMainMenu, resetQuestions, clearPlayers, resetPlayerResponses, resetLeaderboard , resetClock, resetAnswerCount, resetScore} from '../actions'
+import { goToMainMenu, resetQuestions, clearPlayers, resetLeaderboard, resetAnswerCount, resetScore} from '../actions'
 import socket from '../api/socket'
 
 class StopGame extends React.Component {

@@ -27,10 +27,4 @@ class ResultSplash extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-    return {
-      player: state.player
-    }
-  }
-
-export default connect(mapStateToProps)(ResultSplash)
+export default connect()(ResultSplash)
