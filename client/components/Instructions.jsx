@@ -64,10 +64,4 @@ export class Instructions extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        room: state.roomName,
-    }
-}
-
-export default connect(mapStateToProps)(Instructions)
+export default connect()(Instructions)

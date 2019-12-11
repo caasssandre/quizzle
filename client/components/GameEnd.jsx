@@ -85,7 +85,6 @@ function mapStateToProps(state) {
     player: state.player,
     players: state.players,
     score: state.score,
-    strikeCount: state.strikeCount
   }
 }
 

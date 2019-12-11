@@ -168,9 +168,6 @@ export class App extends React.Component {
     return (      
       <Router>
         {this.props.pageNumber != 1 &&
-        // <div className="home">
-        //   <h1 className='home-gameTitle'>Quizzical</h1>
-        // </div>:
         <div className="questions">
           <h1 className='questions-gameTitle'>Quizzical</h1>
         </div>

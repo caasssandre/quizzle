@@ -80,11 +80,5 @@ export class Welcome extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    room: state.roomName,
-    name: state.name
-  }
-}
 
-export default connect(mapStateToProps)(Welcome)
+export default connect()(Welcome)

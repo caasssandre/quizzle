@@ -76,7 +76,6 @@ function mapStateToProps(state) {
   return {
     teamName: state.teamName,
     player: state.player,
-    players: state.players,
     totalRounds: state.totalRounds
   }
 }
