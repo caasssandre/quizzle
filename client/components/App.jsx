@@ -56,7 +56,7 @@ export class App extends React.Component {
     // Stops game when another player leaves the team
     socket.on('user has left team', player => {
       this.props.dispatch(addToMissingPlayers(player.name))
-      if (this.props.pageNumber <= 4) {
+      if (this.props.pageNumber <= 4 || player.captain == true) {
         if (!this.props.missingPlayers.includes(this.props.player.name)) {
           this.props.dispatch(goToStopGame())
         }
