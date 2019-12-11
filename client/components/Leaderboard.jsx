@@ -5,6 +5,13 @@ import socket from '../api/socket'
 import LeaderboardSplash from './LeaderboardSplash'
 import AddScore from './AddScore'
 
+import UIfx from 'uifx'
+
+import { isIOS } from 'react-device-detect';
+
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
+
 let colors = ['#FFB900', '#69797E', '#847545', '#0078D7', '#0099BC', '#7A7574', '#767676', '#FF8C00', '#0063B1', '#2D7D9A', '#5D5A58', '#4C4A48', '#F7630C', '#EA005E', '#8E8CD8', '#00B7C3', '#68768A',
     '#CA5010', '#C30052', '#6B69D6', '#038387', '#515C6B', '#4A5459', '#DA3B01', '#E3008C', '#8764B8', '#00B294',
     '#567C73', '#647C64', '#EF6950', '#BF0077', '#744DA9', '#018574', '#486860', '#525E54', '#D13438', '#C239B3',
@@ -47,17 +54,25 @@ class Leaderboard extends React.Component {
     }
 
     playAgain = () => {
+        if (!isIOS){
+            buttonClick.play()
+          }
         socket.emit('reset game', this.props.teamName)
         if (this.props.missingPlayers.length != 0) {
             socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length - this.props.missingPlayers.length, players: this.props.players })
         } else {
             socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+
         }
     }
 
     mainMenu = () => {
+        if (!isIOS){
+            buttonClick.play()
+          }
         socket.emit('reset game', this.props.teamName)
         socket.emit('main menu', this.props.teamName)
+
     }
 
     render() {

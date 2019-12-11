@@ -4,13 +4,14 @@ import socket from '../api/socket'
 
 import ResultSplash from './ResultSplash'
 
+import { isIOS } from 'react-device-detect'
 import UIfx from 'uifx'
-
-
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
 const correctfx = "/sfx/correct.mp3"
 const incorrectfx = "/sfx/incorrect.mp3"
-const correct = new Audio(correctfx);
-const incorrect = new Audio(incorrectfx)
+const correct = new UIfx(correctfx);
+const incorrect = new UIfx(incorrectfx)
 
 class Results extends React.Component {
   constructor(props) {
@@ -48,12 +49,19 @@ class Results extends React.Component {
   }
 
   nextQuestion = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     socket.emit('new question', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
     socket.emit('check for strike', this.props.teamName)
   }
 
   endGame = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     if (this.state.buttonClicked == true) {
+
       // do nothing
     }
     else {

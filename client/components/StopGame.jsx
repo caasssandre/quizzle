@@ -3,12 +3,22 @@ import {connect} from 'react-redux'
 import { goToMainMenu, resetQuestions, clearPlayers, resetPlayerResponses, resetLeaderboard , resetClock, resetAnswerCount, resetScore} from '../actions'
 import socket from '../api/socket'
 
+import UIfx from 'uifx'
+
+import { isIOS } from 'react-device-detect';
+
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
+
 class StopGame extends React.Component {
   constructor(props) {
     super(props)
   }
 
   reStartGame = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     socket.emit('delete player', this.props.socketId)
     this.props.dispatch(goToMainMenu())
     this.props.dispatch(resetQuestions())
@@ -16,6 +26,8 @@ class StopGame extends React.Component {
     this.props.dispatch(resetAnswerCount())
     this.props.dispatch(resetScore())
     this.props.dispatch(clearPlayers())
+
+
   }
 
   render() {

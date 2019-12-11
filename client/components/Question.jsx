@@ -1,6 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
+import UIfx from 'uifx'
+
+import { isIOS } from 'react-device-detect';
+
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
 
 class Question extends React.Component {
   constructor(props) {
@@ -39,9 +45,13 @@ class Question extends React.Component {
   }
 
   handleClick = event => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     if (this.props.answerCount == this.props.players.length - 1) {
       this.selectAnswer(event)
       this.props.finishRound()
+
     }
     else {
       this.selectAnswer(event)

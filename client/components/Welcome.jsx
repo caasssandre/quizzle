@@ -5,6 +5,8 @@ import Create from './Create'
 import Join from './Join'
 import UIfx from 'uifx'
 
+import { isIOS } from 'react-device-detect';
+
 const buttonfx = "/sfx/buttonClick.mp3"
 const buttonClick = new UIfx(buttonfx)
 
@@ -38,7 +40,10 @@ export class Welcome extends React.Component {
 
   changePage = (event, page) => {
     event.preventDefault();
-    buttonClick.play()
+    if (!isIOS){
+      buttonClick.play()
+    }
+
     this.setState({
       display: page,
       history: [...this.state.history, page],

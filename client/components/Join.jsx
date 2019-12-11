@@ -4,6 +4,12 @@ import { connect } from 'react-redux'
 import {savePlayerDetails, incrementPage, saveTeamName} from '../actions'
 import { addPlayerToTeam, getTeams, getPlayersByTeam } from '../api/users'
 import socket from '../api/socket'
+import UIfx from 'uifx'
+
+import { isIOS } from 'react-device-detect';
+
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
 
  export class Join extends React.Component {
   constructor(props) {
@@ -29,6 +35,9 @@ import socket from '../api/socket'
 
 
   joinTeam = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     if(this.state.buttonClicked == true){
       // do nothing
     }

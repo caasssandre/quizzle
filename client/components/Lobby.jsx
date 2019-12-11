@@ -2,9 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
 import UIfx from 'uifx'
+import { isIOS } from 'react-device-detect';
 
 const joinfx = "/sfx/playerJoin.mp3"
 const join = new Audio(joinfx);
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
 
 class Lobby extends React.Component {
   constructor(props) {
@@ -29,6 +32,9 @@ class Lobby extends React.Component {
 
   handleClick = (e) => {
     e.preventDefault()
+    if (!isIOS){
+      buttonClick.play()
+    }
     socket.emit('set total rounds', {teamName: this.props.teamName, totalRounds: this.props.totalRounds})
     socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.state.players.length, players:this.state.players })
   }
