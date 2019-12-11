@@ -19,6 +19,7 @@ const buttonClick = new UIfx(buttonfx)
       team:'',
       buttonClicked:false
     }
+    this.joinTeam = this.joinTeam.bind(this)
   }
 
   handleChange = (event) => {
@@ -33,7 +34,8 @@ const buttonClick = new UIfx(buttonfx)
   }
 
 
-  joinTeam = () => {
+//please leave this function alone, thanks 
+  joinTeam () {
     if (!isIOS){
       buttonClick.play()
     }

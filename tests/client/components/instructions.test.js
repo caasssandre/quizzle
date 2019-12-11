@@ -17,15 +17,10 @@ describe('Inscructions Component', () => {
 
     test('Page title should render without errors', () => {
         const component = shallow(<Instructions />)
-        const title = component.find('.home-gameTitle')
+        const title = component.find('.setup-gameTitle')
         expect(title.length).toBe(1)
     })
 })
-
-
-
-
-
 
 // Tests to see that the Instructions component renders
 test('test to see if instructions page renders', () => {
@@ -34,13 +29,4 @@ test('test to see if instructions page renders', () => {
     expect(component).toMatchSnapshot()
   
   })
-
-
-  
-// test('test state', () => {
-//     const component = mount(<Instructions />);
-//     component.find('[className="home-btns__btn"]').simulate('click');
-//     expect(component.state('isLoading')).toEqual(true);
-//     component.unmount();
-//   });
 

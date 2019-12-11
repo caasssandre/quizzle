@@ -1,7 +1,24 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {Welcome} from '../../../client/components/Welcome'
 import Instructions from '../../../client/components/Instructions'
 import Join from '../../../client/components/Join'
 import Create from '../../../client/components/Create'
+
+window.HTMLMediaElement.prototype.load = () => {
+  /* do nothing */
+}
+window.HTMLMediaElement.prototype.play = () => {
+  /* do nothing */
+}
+window.HTMLMediaElement.prototype.pause = () => {
+  /* do nothing */
+}
+window.HTMLMediaElement.prototype.addTextTrack = () => {
+  /* do nothing */
+}
 
 import React from 'react'
 import { shallow } from 'enzyme'
@@ -94,11 +111,3 @@ describe('Welcome Component Tests', () => {
      })
   
 })
-
-
-
-// const wrapper = shallow(<Foo />);
-
-// expect(wrapper.find('.clicks-0').length).to.equal(1);
-// wrapper.find('a').simulate('click');
-// expect(wrapper.find('.clicks-1').length).to.equal(1);
