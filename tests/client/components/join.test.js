@@ -1,7 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Join } from '../../../client/components/Join'
 import { Welcome } from '../../../client/components/Welcome'
 import Create from '../../../client/components/Create'
-
 
 import React from 'react'
 import { shallow, mount } from 'enzyme'
@@ -10,11 +13,6 @@ const setUp = (props = {}) => {jest.fn()
   const component = shallow(<Join {...props} />)
   return component
 }
-
-// const setUp2 = (props = {}) => {
-//   const component2 = shallow(<Welcome {...props} window={false}/>)
-//   return component2
-// }
 
 describe('Join Component Tests', () => {
   let component
@@ -76,7 +74,7 @@ describe('Join Component Tests', () => {
     const spy = jest.spyOn(Join.prototype, 'joinTeam')
     const component = shallow(<Join />)
 
-    component.find('#join-btn').simulate('click', 'joinTeam')
+    component.find('#join-btn').simulate('click', 'this.joinTeam')
    
     expect(spy).toHaveBeenCalled()
   })
