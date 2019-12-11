@@ -1,6 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import socket from '../api/socket'
+import UIfx from 'uifx'
+
+import { isIOS } from 'react-device-detect';
+
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
 
 class Question extends React.Component {
   constructor(props) {
@@ -10,6 +16,7 @@ class Question extends React.Component {
       display2: '',
       display3: '',
       display4: '',
+      answerSelected: false
     }
 
   }
@@ -39,9 +46,13 @@ class Question extends React.Component {
   }
 
   handleClick = event => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     if (this.props.answerCount == this.props.players.length - 1) {
       this.selectAnswer(event)
       this.props.finishRound()
+
     }
     else {
       this.selectAnswer(event)
@@ -49,21 +60,29 @@ class Question extends React.Component {
   }
 
   selectAnswer = (event) => {
-    this.props.dispatch({
-      type: 'SUBMIT_ANSWER',
-      response: {
-        question: this.props.questions.jumbledTrivias[this.props.player.index]
-          .question,
-        correctAnswer: this.props.questions.jumbledTrivias[
-          this.props.player.index
-        ].correctAnswer,
-        selectedAnswer: event.target.id
-      }
-    })
-    this.setState({
-      submittedAnswer: true
-    })
-    socket.emit('submitted answer', this.props.teamName)
+    if(this.state.answerSelected){
+      //do nothing
+    }
+    else{
+      this.setState({
+        answerSelected:true
+      })
+      this.props.dispatch({
+        type: 'SUBMIT_ANSWER',
+        response: {
+          question: this.props.questions.jumbledTrivias[this.props.player.index]
+            .question,
+          correctAnswer: this.props.questions.jumbledTrivias[
+            this.props.player.index
+          ].correctAnswer,
+          selectedAnswer: event.target.id
+        }
+      })
+      this.setState({
+        submittedAnswer: true
+      })
+      socket.emit('submitted answer', this.props.teamName)     
+    }
   }
 
   render() {

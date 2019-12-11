@@ -6,6 +6,9 @@ const reducer = (state = '', action) => {
     case 'SAVE_TEAM_NAME': {
       return action.teamName
     }
+    case 'RESET_TEAM_NAME': {
+      return ''
+    }
     default:
       return state
   }
