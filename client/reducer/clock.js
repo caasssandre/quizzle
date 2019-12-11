@@ -2,6 +2,9 @@ const timePerPlayer = 20
 
 const reducer = (state = timePerPlayer, action) => {
   switch (action.type){
+    case 'RESET':{
+      return 20
+    }
     case 'DECREMENT_CLOCK':{
       return state -1
     }

@@ -1,5 +1,8 @@
 const reducer = (state = [], action) => {
     switch (action.type){
+      case 'RESET':{
+        return []
+      }
       case 'SUBMIT_ANSWER':{
         return [...state, action.response]
       }

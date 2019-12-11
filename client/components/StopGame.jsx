@@ -10,14 +10,17 @@ class StopGame extends React.Component {
 
   reStartGame = () => {
     socket.emit('delete player', this.props.socketId)    
-    this.props.dispatch(resetQuestions())
-    this.props.dispatch(resetLeaderboard())
-    this.props.dispatch(resetAnswerCount())
-    this.props.dispatch(resetScore())
-    this.props.dispatch(clearPlayers())
-    this.props.dispatch(resetRound())
-    this.props.dispatch(resetMissingPlayers())
-    this.props.dispatch(goToMainMenu())
+    // this.props.dispatch(resetQuestions())
+    // this.props.dispatch(resetLeaderboard())
+    // this.props.dispatch(resetAnswerCount())
+    // this.props.dispatch(resetScore())
+    // this.props.dispatch(clearPlayers())
+    // this.props.dispatch(resetRound())
+    // this.props.dispatch(resetMissingPlayers())
+    // this.props.dispatch(goToMainMenu())
+    this.props.dispatch({
+      type: 'RESET'
+    })
     
   }
 

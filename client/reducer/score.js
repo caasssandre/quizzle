@@ -1,6 +1,9 @@
 const reducer = (state = {correct:0, total:0, points:0}, action) => {
 
-  switch (action.type){    
+  switch (action.type){
+    case 'RESET':{
+      return {correct:0, total:0, points:0}
+    }    
     case 'INCREMENT_SCORE':{
       if(isNaN(action.score)){
         console.log('NaN')

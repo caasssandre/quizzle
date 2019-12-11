@@ -1,5 +1,8 @@
 const reducer = (state = [], action) => {
     switch (action.type){
+      case 'RESET':{
+        return []
+      }
       case 'ADD_ALL_PLAYERS':{
         return action.players
       }
