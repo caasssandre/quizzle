@@ -35,13 +35,13 @@ class Game extends React.Component {
 
   finishRound = () => {
     socket.emit('increment pages', this.props.teamName)
-  }
-  
+  }  
 
   render(){
     let q = this.props.questions
     return(
-      !q.trivias || this.props.clock > this.props.players.length * 20 ? <QuestionSplash/> :
+      !q.trivias ? <QuestionSplash/> :
+      this.props.clock > this.props.players.length * 20 ? <QuestionSplash/> :
         <div className='questions'>
           <ProgressBar/>
           <Question finishRound={this.finishRound}/>
