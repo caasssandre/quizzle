@@ -12,10 +12,14 @@ module.exports = {
       test: /\.jsx?$/,
       loader: 'babel-loader',
       exclude: /node_modules/
+    },
+    {
+      test: /\.mp3?$/,
+      loader: 'file-loader',
     }]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.mp3']
   },
   devtool: 'source-map',
   devServer: {

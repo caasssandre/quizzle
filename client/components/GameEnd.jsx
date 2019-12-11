@@ -17,13 +17,17 @@ class GameEnd extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     gameEndFx.play()
   }
 
   playAgain = () => {
     socket.emit('reset game', this.props.teamName)
-    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
+    if (this.props.missingPlayers.length != 0) {
+      socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length - this.props.missingPlayers.length, players: this.props.players })
+    } else {
+      socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+    }
   }
 
   mainMenu = () => {
@@ -55,19 +59,17 @@ class GameEnd extends React.Component {
 
     return (
       <div className='end'>
-        <h1 className='end-gameTitle'>Quizzical</h1>
+        {/* <h1 className='end-gameTitle'>Quizzical</h1> */}
         <h1 className='end-title'>
           Congrats!
         </h1>
         {this.props.score.points == 0 ?
-        <h3 className='end-allIncorrect'>Oops, you didn't get any answers correct...</h3> :
-        this.props.score.correct == this.props.score.total ?
-        <h3 className='end-allIncorrect'>Impressive, you got all of the answers correct!</h3> :
-          <ChartistGraph className='ct-chart' data={data} options={options} type={'Pie'} />}
+          <h3 className='end-allIncorrect'>Oops, you didn't get any answers correct...</h3> :
+          this.props.score.correct == this.props.score.total ?
+            <h3 className='end-allIncorrect'>Impressive, you got all of the answers correct!</h3> :
+            <ChartistGraph className='ct-chart' data={data} options={options} type={'Pie'} />}
         <h3 className='end-scoreText'>
           Your score is {this.props.score.points}
-          {/* Your team got {this.props.score.correct} out of{' '}
-          {this.props.score.total} answers correct! */}
         </h3>
 
         {this.props.player.captain && (
@@ -78,7 +80,7 @@ class GameEnd extends React.Component {
 
             <section className='leaderboard-btnSection'>
               <div className='setup-btns__btn' onClick={this.playAgain}>Play Again</div>
-              <div className='home-btns__btn' onClick={this.mainMenu}>Main menu</div>
+              <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>
             </section>
           </>
         )}
@@ -93,7 +95,8 @@ function mapStateToProps(state) {
     player: state.player,
     players: state.players,
     score: state.score,
-    strikeCount: state.strikeCount
+    strikeCount: state.strikeCount,
+    missingPlayers: state.missingPlayers
   }
 }
 

@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import Instructions from './Instructions'
 import Create from './Create'
 import Join from './Join'
+import UIfx from 'uifx'
 
 const buttonfx = "/sfx/buttonClick.mp3"
-const buttonClick = new Audio(buttonfx)
+const buttonClick = new UIfx(buttonfx)
 
 export class Welcome extends React.Component {
   constructor(props) {
@@ -34,13 +35,6 @@ export class Welcome extends React.Component {
     }
   }
 
-  // startClick = (e) => {
-  //   e.preventDefault()
-  //   buttonClick.play()
-  //   this.props.dispatch({
-  //     type: 'INCREMENT_PAGE'
-  //   })
-  // }
 
   changePage = (event, page) => {
     event.preventDefault();

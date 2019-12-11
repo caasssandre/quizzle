@@ -25,9 +25,23 @@ export function saveTeamName(team) {
     }
 }
 
+export function addPlayers(players){
+    return {
+        type: 'ADD_ALL_PLAYERS',
+        players,
+    }
+}
+
 export function clearPlayers(){
     return{
         type: 'CLEAR_PLAYERS'
+    }
+}
+
+export function removeMissingPlayers(missingPlayers){
+    return {
+        type: 'REMOVE_MISSING_PLAYERS',
+        missingPlayers
     }
 }
 
@@ -174,3 +188,16 @@ export function resetLeaderboard() {
     }
 }
 
+// Missing Players
+export function addToMissingPlayers(player) {
+    return {
+        type: 'ADD_MISSING_PLAYER',
+        player
+    }
+}
+
+export function resetMissingPlayers(){
+    return {
+        type: 'RESET_MISSING_PLAYERS'
+    }
+}
