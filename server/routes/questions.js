@@ -11,10 +11,11 @@ function getQuestions(qAmount) {
     request
       .get(gameApi)
       .then(res => processApiQuestions(res.body.results))
+      .catch(error => console.log(error))
   )  
 }
 
-function processApiQuestions(apiResponse) {
+function processApiQuestions(apiResponse) { 
   let trivias = apiResponse.map(trivia => {
       return {
           question: he.decode(trivia.question),
@@ -49,5 +50,6 @@ function jumbleQuestions(trivias) {
 }
 
 module.exports = {
-  getQuestions
+  getQuestions,
+  jumbleQuestions
 }

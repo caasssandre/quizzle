@@ -4,10 +4,14 @@ import { connect } from 'react-redux'
 import socket from '../api/socket'
 
 import UIfx from 'uifx'
+import { isIOS } from 'react-device-detect';
+
 
 
 const gameEndFile = "/sfx/win.mp3"
 const gameEndFx = new UIfx(gameEndFile);
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
 
 class GameEnd extends React.Component {
   constructor(props) {
@@ -22,6 +26,9 @@ class GameEnd extends React.Component {
   }
 
   playAgain = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     socket.emit('reset game', this.props.teamName)
     if (this.props.missingPlayers.length != 0) {
       socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length - this.props.missingPlayers.length, players: this.props.players })
@@ -31,11 +38,17 @@ class GameEnd extends React.Component {
   }
 
   mainMenu = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     socket.emit('reset game', this.props.teamName)
     socket.emit('main menu', this.props.teamName)
   }
 
   leaderboard = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     if (this.state.buttonClicked == true) {
       // do nothing
     }

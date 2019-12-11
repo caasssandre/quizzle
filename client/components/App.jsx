@@ -26,7 +26,7 @@ import { addPlayers, removeMissingPlayers } from '../actions/index'
 import { addToMissingPlayers, resetMissingPlayers } from '../actions/index'
 
 const cooldownfx = "/sfx/cooldown2.mp3"
-const cooldown = new UIfx(cooldownfx);
+const cooldown = new Audio(cooldownfx);
 
 export class App extends React.Component {
   constructor(props) {

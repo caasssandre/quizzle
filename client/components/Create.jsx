@@ -5,6 +5,13 @@ import { savePlayerDetails, saveTeamName, incrementPage, setTotalRounds } from '
 import { addPlayerToTeam, getTeams } from '../api/users'
 import socket from '../api/socket'
 
+import UIfx from 'uifx'
+
+import { isIOS } from 'react-device-detect';
+
+const buttonfx = "/sfx/buttonClick.mp3"
+const buttonClick = new UIfx(buttonfx)
+
 export class Create extends React.Component {
   constructor(props) {
     super(props)
@@ -54,6 +61,9 @@ export class Create extends React.Component {
   }
 
   createTeam = () => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     if (this.state.buttonClicked == true) {
       // do nothing
     }
@@ -73,6 +83,9 @@ export class Create extends React.Component {
   }
 
   addPlayerToTeam = (captain) => {
+    if (!isIOS){
+      buttonClick.play()
+    }
     socket.emit('join team', this.state.team)
     addPlayerToTeam(this.state.captainName, this.state.team, captain, this.props.player.socketId)
       .then(players => {
