@@ -37,8 +37,6 @@ class Lobby extends React.Component {
     return (
       <main>
         <section className='lobby'>
-          {/* <h1 className='lobby-gameTitle'>Quizzical</h1> */}
-
           {!this.props.player.captain &&
             <>
               <h2 className='lobby-title'>
@@ -55,7 +53,6 @@ class Lobby extends React.Component {
               <h2 className='lobby-instructions'>Give this code to your team: {' '}
                 {this.props.teamName}</h2>
             </>}
-
           <div className='lobby-users'>
             {this.state.players.length > 0 &&
               this.state.players.map(player => {
@@ -69,7 +66,6 @@ class Lobby extends React.Component {
               All Players Are In!
             </div>
           }
-
         </section>
       </main>
     )
