@@ -10,6 +10,7 @@ class Question extends React.Component {
       display2: '',
       display3: '',
       display4: '',
+      answerSelected: false
     }
 
   }
@@ -49,21 +50,29 @@ class Question extends React.Component {
   }
 
   selectAnswer = (event) => {
-    this.props.dispatch({
-      type: 'SUBMIT_ANSWER',
-      response: {
-        question: this.props.questions.jumbledTrivias[this.props.player.index]
-          .question,
-        correctAnswer: this.props.questions.jumbledTrivias[
-          this.props.player.index
-        ].correctAnswer,
-        selectedAnswer: event.target.id
-      }
-    })
-    this.setState({
-      submittedAnswer: true
-    })
-    socket.emit('submitted answer', this.props.teamName)
+    if(this.state.answerSelected){
+      //do nothing
+    }
+    else{
+      this.setState({
+        answerSelected:true
+      })
+      this.props.dispatch({
+        type: 'SUBMIT_ANSWER',
+        response: {
+          question: this.props.questions.jumbledTrivias[this.props.player.index]
+            .question,
+          correctAnswer: this.props.questions.jumbledTrivias[
+            this.props.player.index
+          ].correctAnswer,
+          selectedAnswer: event.target.id
+        }
+      })
+      this.setState({
+        submittedAnswer: true
+      })
+      socket.emit('submitted answer', this.props.teamName)     
+    }
   }
 
   render() {
