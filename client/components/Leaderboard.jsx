@@ -152,6 +152,7 @@ function mapStateToProps(state) {
         players: state.players,
         teamName: state.teamName,
         leaders: state.leaderboard,
+        missingPlayers: state.missingPlayers
     }
 }
 
