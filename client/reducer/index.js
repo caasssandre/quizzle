@@ -13,6 +13,7 @@ import roundCount from './roundCount'
 import totalRounds from './totalRounds'
 import leaderboard from './leaderboard'
 import strikeCount from './strikeCount'
+import missingPlayers from './missingPlayers'
 
 export default combineReducers({
     pageNumber,
@@ -27,5 +28,6 @@ export default combineReducers({
     roundCount,
     totalRounds,
     leaderboard,
-    strikeCount
+    strikeCount,
+    missingPlayers
 })

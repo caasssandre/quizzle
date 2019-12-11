@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { goToMainMenu, resetQuestions, clearPlayers, resetPlayerResponses, resetLeaderboard , resetClock, resetAnswerCount, resetScore} from '../actions'
+import { goToMainMenu, resetQuestions, clearPlayers, resetLeaderboard, resetAnswerCount, resetScore} from '../actions'
 import socket from '../api/socket'
 
 class StopGame extends React.Component {
@@ -21,10 +21,9 @@ class StopGame extends React.Component {
   render() {
     return (
       <div className="lobby">
-        {/* <h1 className='lobby-gameTitle'>Quizzical</h1> */}
         <h2 className='lobby-title'>Oops it looks like somebody has closed their page!</h2>
-        {this.props.players &&
-          this.props.players.map(player => {
+        {this.props.missingPlayers &&
+          this.props.missingPlayers.map(player => {
             return (
               <h3 className="lobby-users__name">{player} has left the game</h3>
             )
@@ -41,7 +40,8 @@ class StopGame extends React.Component {
 
 function mapStateToProps(state){
   return{
-    socketId: state.player.socketId
+    socketId: state.player.socketId,
+    missingPlayers: state.missingPlayers
   }
 }
 

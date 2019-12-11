@@ -8,7 +8,7 @@ class AddScore extends React.Component {
         this.state = {
             team: '',
             buttonClicked: false,
-            message:''
+            message: ''
         };
     }
 
@@ -19,26 +19,30 @@ class AddScore extends React.Component {
     }
 
     submitScore = () => {
-        if(this.state.buttonClicked == true){
+        if (this.state.buttonClicked == true) {
             // do nothing
         }
-        else if(this.state.team == ''){
+        else if (this.state.team == '') {
             this.setState({
-                message:'You need to enter a name for your team!'
+                message: 'You need to enter a name for your team!'
             })
         }
-        else{
+        else {
             let teamScore = this.props.score.points
             socket.emit('add to leaderboard', { teamName: this.state.team, teamCode: this.props.teamName, teamSize: this.props.players.length, teamScore: teamScore, totalRounds: this.props.totalRounds })
             this.setState({
-                buttonClicked:true
+                buttonClicked: true
             })
         }
     }
 
     playAgain = () => {
         socket.emit('reset game', this.props.teamName)
-        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+        if (this.props.missingPlayers.length != 0) {
+            socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length - this.props.missingPlayers.length, players: this.props.players })
+        } else {
+            socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+        }
     }
 
     mainMenu = () => {
@@ -49,9 +53,7 @@ class AddScore extends React.Component {
     render() {
         return (
             <div className="leaderboard">
-                {/* <h1 className="leaderboard-gameTitle">Quizzical</h1> */}
                 <h1 className="leaderboard-title">Add Score to Leaderboard</h1>
-
                 <p className="leaderboard-team">Team name:</p>
                 <input className="leaderboard-team__field" name="team" onChange={this.handleChange} />
                 <h3 className="leaderboard-team__score">Your Score: {this.props.score.points}</h3>
@@ -59,7 +61,6 @@ class AddScore extends React.Component {
                 <div className='home-btns'>
                     <div className='home-btns__btn' onClick={this.submitScore}>Submit Score</div>
                 </div>
-
                 <section className='leaderboard-btnSection'>
                     <div className='setup-btns__btn' onClick={this.playAgain}>Play Again</div>
                     <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>
@@ -74,7 +75,8 @@ function mapStateToProps(state) {
         players: state.players,
         teamName: state.teamName,
         score: state.score,
-        totalRounds: state.totalRounds
+        totalRounds: state.totalRounds,
+        missingPlayers: state.missingPlayers
     }
 }
 

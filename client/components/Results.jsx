@@ -25,27 +25,25 @@ class Results extends React.Component {
       if (this.props.playerResponses[0].selectedAnswer == this.props.playerResponses[0].correctAnswer) {
         socket.emit('score', { score: 1, teamName: this.props.teamName })
       }
-      else {
-        socket.emit('score', { score: 0, teamName: this.props.teamName })
-      }
+      else {socket.emit('score', { score: 0, teamName: this.props.teamName })}
     }
-    else {
-      socket.emit('score', { score: 0, teamName: this.props.teamName })
-    }
+    else {socket.emit('score', { score: 0, teamName: this.props.teamName })}
+
     setTimeout(() => {
       this.setState({
         showResults: true
       })
-      if(!this.props.playerResponses[0]){
+      if (!this.props.playerResponses[0]) {
         incorrect.play()
       }
-      else if(this.props.playerResponses[0].selectedAnswer == this.props.playerResponses[0].correctAnswer){
+      else if (this.props.playerResponses[0].selectedAnswer == this.props.playerResponses[0].correctAnswer) {
         correct.play()
       } else {
         incorrect.play()
       }
     }, 2000)
   }
+
 
   nextQuestion = () => {
     socket.emit('new question', { teamName: this.props.teamName, numOfPlayers: this.props.players.length })
@@ -65,6 +63,44 @@ class Results extends React.Component {
     }
   }
 
+  showScore = (response) => {
+    return (
+      <div className='results-points'>
+        {response.correctAnswer == response.selectedAnswer && <h4>+50 pts</h4>}
+        {this.props.strike && <h4>STRIKE! +50 pts</h4>}
+        {this.props.strike * this.props.strikeCount > 0 &&
+          <h4>STREAK x{this.props.strikeCount + 1}! +{(this.props.strikeCount) * 50} pts</h4>
+        }
+      </div>
+    )
+  }
+
+  showAnswer = (response) => {
+    return (
+      response.correctAnswer == response.selectedAnswer ?
+        <div className='results-answers'>
+          <h3>Correct: {response.correctAnswer}</h3>
+        </div> :
+        <div className='results-answers'>
+          <h3 className='results-incorrect'>Incorrect: {response.selectedAnswer}</h3>
+          <h3>Correct: {response.correctAnswer}</h3>
+        </div>
+    )
+  }
+
+  beQuicker = () => {
+    return (
+      <div>
+        <h1 className='results-noAnswer'>Be quicker next time!</h1>
+        {this.props.questions.jumbledTrivias &&
+          <>
+            <h2 className='results-question'>{this.props.questions.jumbledTrivias[this.props.player.index].question}</h2>
+            <h3>Correct: {this.props.questions.jumbledTrivias[this.props.player.index].correctAnswer}</h3>
+          </>}
+      </div>
+    )
+  }
+
   render() {
     let response = this.props.playerResponses[0]
     if (!this.state.showResults) {
@@ -73,54 +109,27 @@ class Results extends React.Component {
     else {
       return (
         <div className='results'>
-          {response != undefined ? (
+          {response != undefined ?
             <div>
-              <div className='results-points'>
-              {response.correctAnswer == response.selectedAnswer && <h4>+50 pts</h4>}
-              {this.props.strike && <h4>STRIKE! +50 pts</h4>}
-              {this.props.strike * this.props.strikeCount > 0 &&
-                <h4>STREAK x{this.props.strikeCount + 1}! +{(this.props.strikeCount) * 50} pts</h4>
-              }
-              </div>
+              {this.showScore(response)}
               <h2 className='results-question'>{response.question}</h2>
-              {response.correctAnswer == response.selectedAnswer ? (
-                <div className='results-answers'>
-                  <h3>Correct: {response.correctAnswer}</h3>
-                </div>
-              ) : (
-                  <div className='results-answers'>
-                    <h3 className='results-incorrect'>Incorrect: {response.selectedAnswer}</h3>
-                    <h3>Correct: {response.correctAnswer}</h3>
-                  </div>
-                )}
-            </div>
-          ) : (
-              <div>
-                <h1 className='results-noAnswer'>Be quicker next time!</h1>
-                {this.props.questions.jumbledTrivias &&
-                  <>
-                    <h2 className='results-question'>{this.props.questions.jumbledTrivias[this.props.player.index].question}</h2>
-                    <h3>Correct: {this.props.questions.jumbledTrivias[this.props.player.index].correctAnswer}</h3>
-                  </>
-                }
-              </div>
-            )}
+              {this.showAnswer(response)}
+            </div> :
+            this.beQuicker()}
           <div className='results-btns'>
             {this.props.player.captain && this.props.roundCount < this.props.totalRounds && (
               <div
                 className='results-btns__btn'
-                onClick={this.nextQuestion}
-              >
+                onClick={this.nextQuestion}>
                 Next Question
               </div>
             )}
             {this.props.player.captain && this.props.roundCount == this.props.totalRounds && (
               <div
                 className='results-btns__btn'
-                onClick={this.endGame}
-              >
+                onClick={this.endGame}>
                 End Game
-                  </div>
+              </div>
             )}
           </div>
         </div>
