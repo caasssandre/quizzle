@@ -8,7 +8,7 @@ class AddScore extends React.Component {
         this.state = {
             team: '',
             buttonClicked: false,
-            message:''
+            message: ''
         };
     }
 
@@ -19,26 +19,30 @@ class AddScore extends React.Component {
     }
 
     submitScore = () => {
-        if(this.state.buttonClicked == true){
+        if (this.state.buttonClicked == true) {
             // do nothing
         }
-        else if(this.state.team == ''){
+        else if (this.state.team == '') {
             this.setState({
-                message:'You need to enter a name for your team!'
+                message: 'You need to enter a name for your team!'
             })
         }
-        else{
+        else {
             let teamScore = this.props.score.points
             socket.emit('add to leaderboard', { teamName: this.state.team, teamCode: this.props.teamName, teamSize: this.props.players.length, teamScore: teamScore, totalRounds: this.props.totalRounds })
             this.setState({
-                buttonClicked:true
+                buttonClicked: true
             })
         }
     }
 
     playAgain = () => {
         socket.emit('reset game', this.props.teamName)
-        socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+        if (this.props.missingPlayers.length != 0) {
+            socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length - this.props.missingPlayers.length, players: this.props.players })
+        } else {
+            socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+        }
     }
 
     mainMenu = () => {
@@ -71,7 +75,8 @@ function mapStateToProps(state) {
         players: state.players,
         teamName: state.teamName,
         score: state.score,
-        totalRounds: state.totalRounds
+        totalRounds: state.totalRounds,
+        missingPlayers: state.missingPlayers
     }
 }
 

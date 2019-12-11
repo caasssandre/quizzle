@@ -22,8 +22,8 @@ class StopGame extends React.Component {
     return (
       <div className="lobby">
         <h2 className='lobby-title'>Oops it looks like somebody has closed their page!</h2>
-        {this.props.players &&
-          this.props.players.map(player => {
+        {this.props.missingPlayers &&
+          this.props.missingPlayers.map(player => {
             return (
               <h3 className="lobby-users__name">{player} has left the game</h3>
             )
@@ -40,7 +40,8 @@ class StopGame extends React.Component {
 
 function mapStateToProps(state){
   return{
-    socketId: state.player.socketId
+    socketId: state.player.socketId,
+    missingPlayers: state.missingPlayers
   }
 }
 

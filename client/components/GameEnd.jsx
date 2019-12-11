@@ -17,13 +17,17 @@ class GameEnd extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     gameEndFx.play()
   }
 
   playAgain = () => {
     socket.emit('reset game', this.props.teamName)
-    socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+    if (this.props.missingPlayers.length != 0) {
+      socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length - this.props.missingPlayers.length, players: this.props.players })
+    } else {
+      socket.emit('all players in', { teamName: this.props.teamName, numOfPlayers: this.props.players.length, players: this.props.players })
+    }
   }
 
   mainMenu = () => {

@@ -5,7 +5,6 @@ import Create from './Create'
 import Join from './Join'
 import UIfx from 'uifx'
 
-
 const buttonfx = "/sfx/buttonClick.mp3"
 const buttonClick = new UIfx(buttonfx);
 
