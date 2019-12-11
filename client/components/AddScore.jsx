@@ -69,7 +69,6 @@ class AddScore extends React.Component {
         return (
             <div className="leaderboard">
                 <h1 className="leaderboard-title">Add Score to Leaderboard</h1>
-
                 <p className="leaderboard-team">Team name:</p>
                 <input className="leaderboard-team__field" name="team" onChange={this.handleChange} />
                 <h3 className="leaderboard-team__score">Your Score: {this.props.score.points}</h3>
@@ -77,7 +76,6 @@ class AddScore extends React.Component {
                 <div className='home-btns'>
                     <div className='home-btns__btn' onClick={this.submitScore}>Submit Score</div>
                 </div>
-
                 <section className='leaderboard-btnSection'>
                     <div className='setup-btns__btn' onClick={this.playAgain}>Play Again</div>
                     <div className='home-btns__btn' onClick={this.mainMenu}>Main Menu</div>

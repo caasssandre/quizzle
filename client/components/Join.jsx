@@ -19,7 +19,6 @@ const buttonClick = new UIfx(buttonfx)
       team:'',
       buttonClicked:false
     }
-    this.joinTeam = this.joinTeam.bind(this)
   }
 
   handleChange = (event) => {

@@ -66,16 +66,13 @@ export class Welcome extends React.Component {
             <div className='home-btns'>
               <div className='home-btns__btn' id="create-btn" onClick={(e) => this.changePage(e, 'create')}>
                 CREATE TEAM
-                  </div>
+              </div>
               <div className='home-btns__btn' id="join-btn" onClick={(e) => this.changePage(e, 'join')}>
                 JOIN TEAM
-                  </div>
-              <div
-                className='home-btns__btn' id="instruct-btn"
-                onClick={(e) => this.changePage(e, 'instructions')}
-              >
+              </div>
+              <div className='home-btns__btn' id="instruct-btn" onClick={(e) => this.changePage(e, 'instructions')}>
                 HOW TO PLAY
-                  </div>
+              </div>
             </div>
           </section>
         </main>}
@@ -87,11 +84,5 @@ export class Welcome extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    room: state.roomName,
-    name: state.name
-  }
-}
 
-export default connect(mapStateToProps)(Welcome)
+export default connect()(Welcome)
