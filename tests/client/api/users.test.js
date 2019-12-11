@@ -33,7 +33,7 @@ describe('getPlayersByTeam', () => {
     expect(res.body).toEqual([{
       captain: 1,
       game_started: 0,
-      id: 1,
+      id: 99991,
       name: "ross",
       socket_id: "000",
       team: "hello"
@@ -41,7 +41,7 @@ describe('getPlayersByTeam', () => {
       {
         captain: 0,
         game_started: 0,
-        id: 3,
+        id: 99993,
         name: "han",
         socket_id: "002",
         team: "hello" 
@@ -49,7 +49,7 @@ describe('getPlayersByTeam', () => {
       {
         captain: 0,
         game_started: 0,
-        id: 4,
+        id: 99994,
         name: "ollie",
         socket_id: "003",
         team: "hello"

@@ -29,7 +29,6 @@ it('should call an api', () => {
  return q.getQuestions(3)
   .then((actual) => {
     expect(actual.jumbledTrivias).toHaveLength(1)
-    console.log(actual.jumbledTrivias[0])
     expect(actual.jumbledTrivias[0]).toHaveProperty('correctAnswer', 'Halo')
   })
 })

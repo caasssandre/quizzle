@@ -20,21 +20,21 @@ test('addPlayerToTeam returns an array with the id of inserted player', ()=>{
 })
 
 test('getPlayersFromTeam returns all the players in one team', ()=>{
-  const expected = [ { id: 1,
+  const expected = [ { id: 99991,
     name: 'ross',
     team: 'hello',
     captain: 1,
     game_started: 0,
     socket_id: '000'
   },
-  { id: 3,
+  { id: 99993,
     name: 'han',
     team: 'hello',
     captain: 0,
     game_started: 0,
     socket_id: '002'
   },
-  { id: 4,
+  { id: 99994,
     name: 'ollie',
     team: 'hello',
     captain: 0,
@@ -60,21 +60,21 @@ test('getTeams returns an array', ()=> {
 
 test('user in game updates game_started to true', ()=>{
   const expected =  [
-    { id: 1,
+    { id: 99991,
     name: 'ross',
     team: 'hello',
     captain: 1,
     game_started: 1,
     socket_id: '000'
   },
-  { id: 3,
+  { id: 99993,
     name: 'han',
     team: 'hello',
     captain: 0,
     game_started: 1,
     socket_id: '002'
   },
-  { id: 4,
+  { id: 99994,
     name: 'ollie',
     team: 'hello',
     captain: 0,
@@ -93,7 +93,7 @@ test('user in game updates game_started to true', ()=>{
 })
 
 test('getTeamBySocketId return player associated with the socket', ()=>{
-  const expected = { id: 1,
+  const expected = { id: 99991,
     name: 'ross',
     team: 'hello',
     captain: 1,
@@ -109,7 +109,7 @@ test('getTeamBySocketId return player associated with the socket', ()=>{
 
 test('removePlayer should remove player from db', ()=>{
   const expected = 1
-  return db.removePlayer(1, database)
+  return db.removePlayer(99991, database)
   .then(numRemoved=>{
     const actual = numRemoved
     expect(actual).toEqual(expected)

@@ -16,7 +16,8 @@ test('addToLeaderboard returns stuff', () => {
     return db.addToLeaderboard({
         teamName: 'hello',
         teamScore: 50,
-        teamSize: 6
+        teamSize: 6,
+        totalRounds: 2
     })
     .then(id => {
         const actual = typeof id[0]
@@ -27,12 +28,13 @@ test('addToLeaderboard returns stuff', () => {
 
 test('get leaderboard team based on 2 teamsize ', () => {
     const expected = [{
-             "id": 1,
+             "id": 9991,
              "teamName": "Woof",
-             "teamScore": 55,
-             "teamSize": 2
+             "teamScore": 50,
+             "teamSize": 2,
+             "totalRounds": 2
            }]
-    return db.getLeaderboard('2', database)
+    return db.getLeaderboard('2', '2', database)
     .then(teams => {
         const actual = teams
         expect(actual).toEqual(expected)
@@ -41,12 +43,14 @@ test('get leaderboard team based on 2 teamsize ', () => {
 
 test('get leaderboard team based on 4 teamsize ', () => {
     const expected = [{
-             "id": 2,
-             "teamName": "Red",
-             "teamScore": 15,
-             "teamSize": 4
+             "id": 9993,
+             "teamName": "Cats",
+             "teamScore": 400,
+             "teamSize": 4,
+             "totalRounds": 5
+
            }]
-    return db.getLeaderboard('4', database)
+    return db.getLeaderboard('4', '5', database)
     .then(teams => {
         const actual = teams
         expect(actual).toEqual(expected)

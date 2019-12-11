@@ -13,6 +13,7 @@ import socket from '../api/socket'
       team:'',
       buttonClicked:false
     }
+    this.joinTeam = this.joinTeam.bind(this)
   }
 
   handleChange = (event) => {
@@ -26,8 +27,8 @@ import socket from '../api/socket'
     return String.fromCharCode(65 + r);
   }
 
-
-  joinTeam = () => {
+//please leave this function alone, thanks 
+  joinTeam () {
     if(this.state.buttonClicked == true){
       // do nothing
     }

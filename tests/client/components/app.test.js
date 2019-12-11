@@ -1,11 +1,15 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 jest.mock('../../../client/api/socket', () => ({}))
-// import renderer from 'react-test-renderer'
-// import configureStore from 'redux-mock-store'
-// import {Provider} from 'react-redux'
-// import {App} from '../../../client/components/App'
-// import { isTSAnyKeyword } from '@babel/types'
+import renderer from 'react-test-renderer'
+import configureStore from 'redux-mock-store'
+import {Provider} from 'react-redux'
+import {App} from '../../../client/components/App'
+import { isTSAnyKeyword } from '@babel/types'
 
 // import ConnectedHome,{App} from '../src/js/components/Home'
 // const myComp = App.WrappedComponent
@@ -15,9 +19,9 @@ jest.mock('../../../client/api/socket', () => ({}))
 //   const wrapper = mount(myComp)
 //   expect(wrapper.text()).toMatch(expected)
 // })
-// test('1+1', () => {
-//   expect(1+1).toEqual(2)
-// })
+test('1+1', () => {
+  expect(1+1).toEqual(2)
+})
 
 // describe('app', ()=>{
 //   let wrapper
