@@ -12,7 +12,7 @@ $deg: 360deg / $numOfColBlocks;
 $red: #FD3359;
 $yellow: #F4D302;
 $blue: #21BDFF;
-$blocksColors: ( 1: $red, 2: $yellow, 3: $blue);
+$blocksColors: (1: $red, 2: $yellow, 3: $blue);
 $size: 140px;
 $sizeBig: 500px;
 $pad: 10px;
@@ -25,7 +25,8 @@ $num3Len: 144.4256591796875;
 $numJoin1-2: 82.63925170898438;
 $numJoin2-3: 42.81303787231445;
 $numJoin3-0: 40;
-$totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 + $numJoin3-0;
+$totalLen: $num1Len+$num2Len+$num3Len+$numJoin1-2+$numJoin2-3+$numJoin3-0;
+
 body {
   background: $bgColor;
   font-family: Helvetica, Arial, sans-serif;
@@ -41,6 +42,7 @@ body {
   padding: $pad;
   border-radius: 20px;
   transform: translateX(-50%);
+
   &__colored-blocks {
     overflow: hidden;
     position: absolute;
@@ -53,6 +55,7 @@ body {
     border-radius: $contBr;
     perspective: 1000px;
     animation: demoAnim $totalAT ease-in-out infinite, contAnim $totalAT infinite;
+
     &-rotater {
       position: absolute;
       left: 0;
@@ -62,6 +65,7 @@ body {
       border-radius: inherit;
       animation: rotation 1.3s linear infinite;
     }
+
     &-inner {
       overflow: hidden;
       position: relative;
@@ -70,6 +74,7 @@ body {
       border-radius: inherit;
     }
   }
+
   &__colored-block {
     position: absolute;
     left: 50%;
@@ -77,6 +82,7 @@ body {
     width: 300%;
     height: 300%;
     transform-origin: 0 0;
+
     @for $i from 1 through $numOfColBlocks {
       &:nth-child(#{$i}) {
         $rt: $deg * ($i - 1);
@@ -86,12 +92,14 @@ body {
       }
     }
   }
+
   &__inner {
     overflow: hidden;
     position: relative;
     width: 100%;
     height: 100%;
   }
+
   &__numbers {
     overflow: visible;
     position: absolute;
@@ -101,6 +109,7 @@ body {
     height: $numSize;
     margin-left: $numSize/-2;
     margin-top: $numSize/-2;
+
     &-path {
       fill: none;
       stroke-width: 10px;
@@ -113,6 +122,7 @@ body {
       opacity: 0;
     }
   }
+
   &__text {
     position: absolute;
     left: 50%;
@@ -132,11 +142,13 @@ body {
 }
 
 @keyframes contAnim {
+
   15%,
   100% {
     margin-left: $sizeBig/-2;
     width: $sizeBig;
   }
+
   25%,
   90% {
     margin-left: $size/-2;
@@ -150,29 +162,35 @@ body {
     stroke-dashoffset: 0;
     opacity: 0;
   }
+
   25%,
   41% {
     opacity: 1;
     stroke-dasharray: $num3Len, $totalLen;
     stroke-dashoffset: -$numJoin3-0;
   }
+
   53%,
   66% {
     stroke-dasharray: $num2Len, $totalLen;
     stroke-dashoffset: -$num3Len - $numJoin2-3 -$numJoin3-0;
   }
+
   76% {
     stroke-dasharray: $num1Len + $numJoin1-2/2, $totalLen;
     stroke-dashoffset: -$num3Len - $numJoin2-3 - $num2Len - $numJoin1-2 -$numJoin3-0;
   }
+
   88%,
   100% {
     stroke-dasharray: $num1Len, $totalLen;
     stroke-dashoffset: -$num3Len - $numJoin2-3 - $num2Len - $numJoin1-2 -$numJoin3-0;
   }
+
   92% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -189,21 +207,25 @@ body {
     border-radius: $contBr;
     transform: rotate(0);
   }
+
   30%,
   43% {
     border-radius: 50%;
     transform: rotate(360deg);
   }
+
   52%,
   65% {
     border-radius: 0;
     transform: rotate(720deg);
   }
+
   78%,
   90% {
     border-radius: 50%;
     transform: rotate(1080deg);
   }
+
   100% {
     border-radius: $contBr;
     transform: rotate(1440deg);
@@ -211,10 +233,12 @@ body {
 }
 
 @keyframes hideText {
+
   15%,
   100% {
     opacity: 1;
   }
+
   20%,
   96% {
     opacity: 0;

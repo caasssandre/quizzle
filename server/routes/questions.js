@@ -12,7 +12,6 @@ function getQuestions(qAmount) {
       .get(gameApi)
       .then(res => processApiQuestions(res.body.results))
   )  
-
 }
 
 function processApiQuestions(apiResponse) {
@@ -30,8 +29,6 @@ function processApiQuestions(apiResponse) {
     jumbledTrivias: jumbleQuestions([...trivias])
   }
 }
-
-
 
 function jumbleQuestions(trivias) {
   let length = trivias.length
