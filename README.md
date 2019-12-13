@@ -50,8 +50,8 @@ Have a look at the code, visit the website at get-quizzical.herokuapp.com and ha
 * [x] Timer is represented by colour/shape change
 * [x] I want to see a leaderboard
 * [x] I want to choose how many rounds I can play
-* [ ] Delete users after a certain time
-* [ ] Handle user disconnects
+* [x] Delete users after a certain time
+* [x] Handle user disconnects
 ---
 
 ## Views (Client Side)
