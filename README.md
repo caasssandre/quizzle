@@ -1,3 +1,8 @@
+# Welcome
+
+This project was the final project completed by me and my colleagues at the dev-academy bootcamp. I pitched the idea of the game as a multiplayer quiz game to be played on mobile devices. I acted as product owner for our team of 4. It was great to see the project come to life in a week and I learned a lot by having to manage other people as well as do the tasks I set myself.
+Have a look at the code, visit the website at get-quizzical.herokuapp.com and have fun!
+
 # Quizzle
 
 ## The Tech
